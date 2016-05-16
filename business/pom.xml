@@ -11,9 +11,7 @@
 
     <artifactId>business</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>../messaging</module>
-    </modules>
+
 
 
 </project>
