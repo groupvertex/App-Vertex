@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="Vasyl" id="changelog-1.0">
+        <insert tableName="register_user">
+            <column name="first_name">Vasyl</column>
+            <column name="last_name">Malik</column>
+            <column name="email">leo124@bigmir.net</column>
+            <column name="password">123</column>
+        </insert>
+    </changeSet>
+
+
+    <changeSet author="Vasyl" id="changelog-2.0">
+        <insert tableName="route">
+            <column name="name">track_one</column>
+        </insert>
+    </changeSet>
+
+
+    <changeSet author="Vasyl" id="changelog-3.0">
+        <insert tableName="waypoint">
+            <column name="track_id">1</column>
+            <column name="x">10</column>
+            <column name="y">25</column>
+            <column name="height">400</column>
+            <column name="accuracy">5</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

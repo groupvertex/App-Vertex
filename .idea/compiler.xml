@@ -22,11 +22,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="Vertex-App" />
+        <module name="analytics" />
+        <module name="database" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Vertex-App" target="1.5" />
+      <module name="analytics" target="1.8" />
+      <module name="business" target="1.8" />
+      <module name="database" target="1.8" />
+      <module name="messaging" target="1.8" />
+      <module name="Vertex-App" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
