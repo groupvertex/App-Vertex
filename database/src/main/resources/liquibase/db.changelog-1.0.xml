@@ -13,11 +13,13 @@
         </insert>
     </changeSet>
 
+
     <changeSet author="Vasyl" id="changelog-2.0">
         <insert tableName="route">
             <column name="name">track_one</column>
         </insert>
     </changeSet>
+
 
     <changeSet author="Vasyl" id="changelog-3.0">
         <insert tableName="waypoint">

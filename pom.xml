@@ -25,7 +25,6 @@
     </properties>
 
     <dependencies>
-
         <!--Spring-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -79,5 +78,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
