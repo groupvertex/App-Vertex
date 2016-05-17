@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS register_user(
+CREATE TABLE IF NOT EXISTS users.register_user(
   id         SERIAL      NOT NULL CONSTRAINT first_key PRIMARY KEY,
   first_name VARCHAR(50) NOT NULL,
   last_name  VARCHAR(50) NOT NULL,
@@ -6,14 +6,14 @@ CREATE TABLE IF NOT EXISTS register_user(
   password   VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS route(
+CREATE TABLE IF NOT EXISTS routes.route(
   id   SERIAL      NOT NULL CONSTRAINT second_key PRIMARY KEY,
   name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS waypoint(
+CREATE TABLE IF NOT EXISTS routes.waypoint(
   id       SERIAL  NOT NULL CONSTRAINT third_key PRIMARY KEY,
-  track_id INTEGER NOT NULL REFERENCES route (id),
+  track_id INTEGER NOT NULL REFERENCES routes.route (id),
   x        FLOAT   NOT NULL,
   y        FLOAT   NOT NULL,
   height   INTEGER NOT NULL,

@@ -4,8 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
     <changeSet author="Vasyl" id="changelog-1.0">
-        <insert tableName="register_user">
+        <insert schemaName="users" tableName="register_user">
             <column name="first_name">Vasyl</column>
             <column name="last_name">Malik</column>
             <column name="email">leo124@bigmir.net</column>
@@ -13,16 +14,14 @@
         </insert>
     </changeSet>
 
-
     <changeSet author="Vasyl" id="changelog-2.0">
-        <insert tableName="route">
+        <insert schemaName="routes" tableName="route">
             <column name="name">track_one</column>
         </insert>
     </changeSet>
 
-
     <changeSet author="Vasyl" id="changelog-3.0">
-        <insert tableName="waypoint">
+        <insert schemaName="routes" tableName="waypoint">
             <column name="track_id">1</column>
             <column name="x">10</column>
             <column name="y">25</column>
@@ -30,4 +29,5 @@
             <column name="accuracy">5</column>
         </insert>
     </changeSet>
+
 </databaseChangeLog>
