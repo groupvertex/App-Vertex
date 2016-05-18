@@ -9,16 +9,41 @@ import java.util.List;
  */
 public class Route {
 
-    private int id;
+    private long id;
     private String name;
+    private List<WayPoint> wayPoints;
 
-    @Override
-    public String toString() {
-        return "Route{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", wayPointList=" + wayPointList +
-                '}';
+    public Route() {
+    }
+
+    public Route(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWayPoints(List<WayPoint> wayPoints) {
+        this.wayPoints = wayPoints;
+    }
+
+    public long getId() {
+
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<WayPoint> getWayPoints() {
+        return wayPoints;
     }
 
     @Override
@@ -30,58 +55,28 @@ public class Route {
 
         if (id != route.id) return false;
         if (name != null ? !name.equals(route.name) : route.name != null) return false;
-        return wayPointList != null ? wayPointList.equals(route.wayPointList) : route.wayPointList == null;
+        return wayPoints != null ? wayPoints.equals(route.wayPoints) : route.wayPoints == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (wayPointList != null ? wayPointList.hashCode() : 0);
+        result = 31 * result + (wayPoints != null ? wayPoints.hashCode() : 0);
         return result;
     }
 
-    public void setWayPointList(List<WayPoint> wayPointList) {
-
-        this.wayPointList = wayPointList;
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", wayPoints=" + wayPoints +
+                '}';
     }
-
-    public List<WayPoint> getWayPointList() {
-
-        return wayPointList;
-    }
-
-    private List<WayPoint> wayPointList;
-
-
-    public Route() {
-    }
-
-    public Route(int id, String name) {
-
-        this.id = id;
-        this.name = name;
-    }
-
-
-
-    public void setId(int id) {
-
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
 }
+
+
+
+

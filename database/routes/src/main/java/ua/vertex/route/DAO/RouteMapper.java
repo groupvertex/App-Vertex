@@ -16,6 +16,5 @@ public class RouteMapper implements RowMapper<Route> {
         route.setId(resultSet.getInt("id"));
         route.setName(resultSet.getString("name"));
         return route;
-        //TODO for waypoint
     }
 }
