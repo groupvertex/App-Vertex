@@ -1,16 +1,20 @@
 package ua.vertex.waypoint.DAO;
 
-import ua.vertex.waypoint.Entity.WayPoint;
-
-import java.util.List;
+//import org.springframework.context.ApplicationContext;
+//import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+//import ua.vertex.waypoint.Configuration.Conf;
+//import ua.vertex.waypoint.Entity.WayPoint;
+//
+//import java.util.List;
 
 /**
  * Created by Vasyl on 18/05/2016.
  */
 public class Test {
 //    public static void main(String[] args) throws InterruptedException {
+//        ApplicationContext context = new AnnotationConfigApplicationContext(Conf.class);
 //
-//        WayPointDAO wayPointDAO = new WayPointDAOImpl();
+//        WayPointDAO wayPointDAO = context.getBean(WayPointDAO.class);
 //        WayPoint point1 = new WayPoint(3, 45, 67, 400, 5);
 //        WayPoint point1New = new WayPoint(3, 111, 111, 111, 1);
 //        WayPoint point2 = new WayPoint(3, 67, 98, 400, 5);

@@ -1,16 +1,12 @@
 package ua.vertex.waypoint.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ua.vertex.waypoint.Configuration.Conf;
 import ua.vertex.waypoint.Entity.WayPoint;
 
 import java.sql.*;
@@ -23,12 +19,8 @@ import java.util.List;
 @Repository
 public class WayPointDAOImpl implements WayPointDAO {
 
-//    @Autowired
-//    @Qualifier("myRepo")
-//    private JdbcTemplate myRepo;
-
-    ApplicationContext context = new AnnotationConfigApplicationContext(Conf.class);
-    private JdbcTemplate myRepo = (JdbcTemplate) context.getBean("myRepo");
+    @Autowired
+    private JdbcTemplate myRepo;
 
     private static final String CREATE = "INSERT INTO routes.waypoint (track_id, x, y, height, accuracy) VALUES(?,?,?,?,?)";
     private static final String READ = "SELECT id, track_id, x, y, height, accuracy, get_time FROM routes.waypoint WHERE id = ?";

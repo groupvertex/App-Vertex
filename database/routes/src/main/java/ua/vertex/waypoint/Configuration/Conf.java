@@ -12,7 +12,7 @@ import javax.sql.DataSource;
  * Created by Vasyl on 18/05/2016.
  */
 @Configuration
-@ComponentScan("ua.vertex.waypoint.Configuration")
+@ComponentScan("ua.vertex.waypoint")
 public class Conf {
 
     private static final String URL = "jdbc:postgresql://localhost:5436/tracker";
