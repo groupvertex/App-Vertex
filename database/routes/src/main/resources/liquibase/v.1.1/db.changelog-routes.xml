@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="Vasyl" id="changelog-1.1.1">
+        <insert schemaName="routes" tableName="waypoint">
+            <column name="track_id">1</column>
+            <column name="x">50</column>
+            <column name="y">50</column>
+            <column name="height">405</column>
+            <column name="accuracy">5</column>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Vasyl" id="changelog-1.1.2">
+        <insert schemaName="routes" tableName="waypoint">
+            <column name="track_id">1</column>
+            <column name="x">90</column>
+            <column name="y">40</column>
+            <column name="height">401</column>
+            <column name="accuracy">5</column>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Vasyl" id="changelog-1.1.3">
+        <insert schemaName="routes" tableName="waypoint">
+            <column name="track_id">1</column>
+            <column name="x">130</column>
+            <column name="y">80</column>
+            <column name="height">398</column>
+            <column name="accuracy">5</column>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Vasyl" id="changelog-1.1.4">
+        <insert schemaName="routes" tableName="route">
+            <column name="name">track_two</column>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Vasyl" id="changelog-1.1.5">
+        <insert schemaName="routes" tableName="route">
+            <column name="name">track_three</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
