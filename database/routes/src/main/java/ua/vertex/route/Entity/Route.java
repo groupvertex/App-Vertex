@@ -22,6 +22,10 @@ public class Route {
         this.name = name;
     }
 
+    public Route(String name) {
+        this.name = name;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
