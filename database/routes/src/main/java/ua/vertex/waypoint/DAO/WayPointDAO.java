@@ -12,5 +12,5 @@ public interface WayPointDAO {
     WayPoint readWayPoint(int id);
     void updateWayPoint(int id, WayPoint wayPoint);
     void deleteWayPoint(int id);
-    List<WayPoint> getSortedWayPointsForRoute(int routeId);
+    List<WayPoint> getSortedWayPointsForRoute(long routeId);
 }

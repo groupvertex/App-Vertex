@@ -92,7 +92,7 @@ public class WayPointDAOImpl implements WayPointDAO {
     }
 
     @Override
-    public List<WayPoint> getSortedWayPointsForRoute(int routeId) {
+    public List<WayPoint> getSortedWayPointsForRoute(long routeId) {
         List<WayPoint> wayPoints = this.myRepo.query(SELECT_ALL_WAYPOINT_TO_ROUTE, new RowMapper<WayPoint>() {
             @Override
             public WayPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
