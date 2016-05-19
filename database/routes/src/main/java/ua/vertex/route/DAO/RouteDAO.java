@@ -8,8 +8,8 @@ import ua.vertex.route.Entity.Route;
 public interface RouteDAO {
 
     void create(Route route);
-    Route read(int id);
-    void update(Route route, int id);
-    void delete(int id);
+    Route read(long id);
+    void update(Route route, long id);
+    void delete(long id);
 
 }

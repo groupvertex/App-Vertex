@@ -2,6 +2,7 @@ package ua.vertex.route.Entity;
 
 import ua.vertex.waypoint.Entity.WayPoint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ public class Route {
 
     private long id;
     private String name;
-    private List<WayPoint> wayPoints;
+    private List<WayPoint> wayPoints = new ArrayList<>();
 
     public Route() {
     }
@@ -30,7 +31,7 @@ public class Route {
     }
 
     public void setWayPoints(List<WayPoint> wayPoints) {
-        this.wayPoints = wayPoints;
+        this.wayPoints.addAll(wayPoints);
     }
 
     public long getId() {
