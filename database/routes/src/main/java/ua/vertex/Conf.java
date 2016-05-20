@@ -1,4 +1,4 @@
-package ua.vertex.route.Configuration;
+package ua.vertex;
 
 import org.postgresql.ds.PGPoolingDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;

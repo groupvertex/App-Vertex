@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
  * Created by Vasyl on 18/05/2016.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = ua.vertex.route.Configuration.Conf.class)
+//@ContextConfiguration(classes = ua.vertex.Conf.class)
 @ContextConfiguration(classes = WayPointDAOImplTest.TestConf.class)
 
 
