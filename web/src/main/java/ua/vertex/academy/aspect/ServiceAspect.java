@@ -23,7 +23,7 @@ public class ServiceAspect {
                 return id;
             }
         } catch (Throwable throwable) {
-            System.out.println(throwable.getMessage());
+            System.out.println("route with the same id is already exist!");
         }
         return id;
     }
@@ -42,17 +42,17 @@ public class ServiceAspect {
 
     @AfterThrowing("execution(* ua.vertex.academy.service.RouteServiceImpl.delete(..))")
     public void aroundDelete() {
-        System.out.println("error on delete");
+        System.out.println("route is already deleted");
     }
 
     @AfterThrowing("execution(* ua.vertex.academy.service.RouteServiceImpl.addWaypoint(..))")
     public void aroundAddWaypoint() {
-        System.out.println("error on add waypoint");
+        System.out.println("waypoint is already added");
     }
 
     @AfterThrowing("execution(* ua.vertex.academy.service.RouteServiceImpl.deleteWayPoint(..))")
     public void aroundDeleteWaypoint() {
-        System.out.println("error on delete waypoint");
+        System.out.println("waypoint is already deleted");
 
     }
 }

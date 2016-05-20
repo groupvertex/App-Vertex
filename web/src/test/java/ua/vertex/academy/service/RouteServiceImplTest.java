@@ -1,9 +1,7 @@
-/*
 package ua.vertex.academy.service;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,10 +13,9 @@ import ua.vertex.waypoint.Entity.WayPoint;
 
 import static org.junit.Assert.*;
 
-*/
 /**
  * Created by RASTA on 20.05.2016.
- *//*
+ */
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Configuration.class)
@@ -53,7 +50,7 @@ public class RouteServiceImplTest {
 
     @Test
     public void get() throws Exception {
-        Route actual = routeService.get(ROUTE_ID + 1);
+        Route actual = routeService.get(ROUTE_ID);
         assertEquals(TEST_ROUTE, actual);
     }
 
@@ -75,8 +72,8 @@ public class RouteServiceImplTest {
     public void deleteTwice() throws Exception {
         routeService.delete(ROUTE_ID);
         routeService.delete(ROUTE_ID);
-        Route route = routeService.get(ROUTE_ID);
-        assertEquals("emptyRoute", route.getName());
+        Route route = routeService.get(ROUTE_ID); // don't work
+        assertEquals("empty", route.getName());
     }
 
     @Test
@@ -90,9 +87,6 @@ public class RouteServiceImplTest {
         Route expected = routeService.get(ROUTE_ID);
         assertEquals(3, expected.getWayPoints().size());
 
-        routeService.deleteWayPoint(first.getId());
-        routeService.deleteWayPoint(second.getId());
-        routeService.deleteWayPoint(third.getId());
     }
 
     @Test
@@ -103,12 +97,13 @@ public class RouteServiceImplTest {
         routeService.addWaypoint(first);
         routeService.addWaypoint(second);
         routeService.addWaypoint(third);
-        routeService.deleteWayPoint(third.getId());
         Route expected = routeService.get(ROUTE_ID);
+
+        WayPoint firstAfterReturn = expected.getWayPoints().get(0);
+
+        routeService.deleteWayPoint(firstAfterReturn.getId());
+        expected = routeService.get(ROUTE_ID);
         assertEquals(2, expected.getWayPoints().size());
 
-        routeService.deleteWayPoint(first.getId());
-        routeService.deleteWayPoint(second.getId());
-
     }
-}*/
+}
