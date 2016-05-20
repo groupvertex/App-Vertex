@@ -23,13 +23,13 @@ public class Test {
 //
 //        System.out.println("-----------------Create points------------------");
 //
-//        int p1 = wayPointDAO.createWayPoint(point1);
+//        long p1 = wayPointDAO.createWayPoint(point1);
 //        Thread.sleep(1000);
-//        int p2 = wayPointDAO.createWayPoint(point2);
+//        long p2 = wayPointDAO.createWayPoint(point2);
 //        Thread.sleep(1000);
-//        int p4 = wayPointDAO.createWayPoint(point4);
+//        long p4 = wayPointDAO.createWayPoint(point4);
 //        Thread.sleep(1000);
-//        int p3 = wayPointDAO.createWayPoint(point3);
+//        long p3 = wayPointDAO.createWayPoint(point3);
 //        Thread.sleep(1000);
 //
 //        System.out.println("id =" + wayPointDAO.readWayPoint(p1).getId());

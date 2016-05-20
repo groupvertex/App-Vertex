@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 public class WayPoint implements Serializable, Comparable<WayPoint> {
     private static long serialVersionUID = 123456789L;
 
-    private int id;
-    private int routeId;
+    private long id;
+    private long routeId;
     private double x;
     private double y;
     private int height;
@@ -55,7 +55,7 @@ public class WayPoint implements Serializable, Comparable<WayPoint> {
 
     @Override
     public int hashCode() {
-        int result;
+        long result;
         long temp;
         result = id;
         result = 31 * result + routeId;
@@ -66,7 +66,7 @@ public class WayPoint implements Serializable, Comparable<WayPoint> {
         result = 31 * result + height;
         result = 31 * result + accuracy;
         result = 31 * result + (addTime != null ? addTime.hashCode() : 0);
-        return result;
+        return (int) result;
     }
 
     @Override
@@ -82,19 +82,19 @@ public class WayPoint implements Serializable, Comparable<WayPoint> {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getRouteId() {
+    public long getRouteId() {
         return routeId;
     }
 
-    public void setRouteId(int routeId) {
+    public void setRouteId(long routeId) {
         this.routeId = routeId;
     }
 

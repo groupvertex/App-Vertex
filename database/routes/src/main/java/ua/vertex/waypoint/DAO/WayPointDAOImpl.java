@@ -33,13 +33,13 @@ public class WayPointDAOImpl implements WayPointDAO {
     }
 
     @Override
-    public int createWayPoint(WayPoint wayPoint) {
+    public long createWayPoint(WayPoint wayPoint) {
         KeyHolder holder = new GeneratedKeyHolder();
         myRepo.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, wayPoint.getRouteId());
+                ps.setLong(1, wayPoint.getRouteId());
                 ps.setDouble(2, wayPoint.getX());
                 ps.setDouble(3, wayPoint.getY());
                 ps.setInt(4, wayPoint.getHeight());
@@ -55,7 +55,7 @@ public class WayPointDAOImpl implements WayPointDAO {
     }
 
     @Override
-    public WayPoint readWayPoint(int id) {
+    public WayPoint readWayPoint(long id) {
         RowMapper<WayPoint> mapper = new RowMapper<WayPoint>() {
             @Override
             public WayPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -76,7 +76,7 @@ public class WayPointDAOImpl implements WayPointDAO {
     }
 
     @Override
-    public void updateWayPoint(int id, WayPoint wayPoint) {
+    public void updateWayPoint(long id, WayPoint wayPoint) {
         myRepo.update(UPDATE,
                 wayPoint.getRouteId(),
                 wayPoint.getX(),
@@ -87,7 +87,7 @@ public class WayPointDAOImpl implements WayPointDAO {
     }
 
     @Override
-    public void deleteWayPoint(int id) {
+    public void deleteWayPoint(long id) {
         myRepo.update(DELETE, id);
     }
 
