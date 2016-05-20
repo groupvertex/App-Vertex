@@ -2,7 +2,7 @@ package ua.vertex.waypoint.DAO;
 
 //import org.springframework.context.ApplicationContext;
 //import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-//import ua.vertex.waypoint.Configuration.Conf;
+//import ua.vertex.waypoint.config.Conf;
 //import ua.vertex.waypoint.Entity.WayPoint;
 //
 //import java.util.List;

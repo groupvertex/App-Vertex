@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS routes.route(
 
 CREATE TABLE IF NOT EXISTS routes.waypoint(
   id       SERIAL  NOT NULL CONSTRAINT third_key PRIMARY KEY,
-  track_id INTEGER NOT NULL REFERENCES routes.route (id),
+  track_id INTEGER NOT NULL REFERENCES routes.route (id) ON DELETE CASCADE ON UPDATE CASCADE ,
   x        FLOAT   NOT NULL,
   y        FLOAT   NOT NULL,
   height   INTEGER NOT NULL,

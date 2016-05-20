@@ -1,4 +1,4 @@
-package ua.vertex.route.Configuration;
+package ua.vertex.route.config;
 
 import org.postgresql.ds.PGPoolingDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -6,22 +6,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.*;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 
 /**
  * Created by Дмитрий on 19.05.2016.
  */
 
-@Import(ua.vertex.waypoint.Configuration.Conf.class)
+@Import(ua.vertex.waypoint.config.WayPointConfig.class)
 @Configuration
 @ComponentScan("ua.vertex.route")
 @PropertySource("classpath:db.properties")
-public class Conf {
+public class RouteConfig {
 
     @Value("${url}")
     private String URL;

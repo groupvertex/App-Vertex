@@ -1,4 +1,4 @@
-package ua.vertex.waypoint.Configuration;
+package ua.vertex.waypoint.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +13,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @ComponentScan("ua.vertex.waypoint")
-public class Conf {
+public class WayPointConfig {
 
     private static final String URL = "jdbc:postgresql://localhost:5436/tracker";
     private static final String USERNAME = "postgres";

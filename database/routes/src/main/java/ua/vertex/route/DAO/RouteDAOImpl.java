@@ -31,10 +31,10 @@ public class RouteDAOImpl implements RouteDAO {
     @Autowired
     WayPointDAO wayPointDAO;
 
-    private static final String INSERTSQL = "INSERT INTO route (id, name) VALUES(:id,:name)";
-    private static final String SELECTSQL = "SELECT id,name FROM route WHERE id = :id";
-    private static final String UPDATESQL = "UPDATE route SET name = :name WHERE id = :id";
-    private static final String DELETESQL = "DELETE FROM route WHERE id = :id";
+    private static final String INSERTSQL = "INSERT INTO routes.route (id, name) VALUES(:id,:name)";
+    private static final String SELECTSQL = "SELECT id,name FROM routes.route WHERE id = :id";
+    private static final String UPDATESQL = "UPDATE routes.route SET name = :name WHERE id = :id";
+    private static final String DELETESQL = "DELETE FROM routes.route WHERE id = :id";
 
     @Override
     public void create(Route route) {

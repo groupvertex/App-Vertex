@@ -7,7 +7,7 @@
 //import org.springframework.dao.EmptyResultDataAccessException;
 //import org.springframework.test.context.ContextConfiguration;
 //import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-//import ua.vertex.route.Configuration.Conf;
+//import ua.vertex.route.config.Conf;
 //import ua.vertex.route.Entity.Route;
 //
 //@RunWith(SpringJUnit4ClassRunner.class)
