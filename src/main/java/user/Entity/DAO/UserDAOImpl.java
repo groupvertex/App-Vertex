@@ -1,9 +1,11 @@
 package user.Entity.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Component;
 import user.Entity.User;
 
 import java.sql.ResultSet;
@@ -14,7 +16,10 @@ import java.util.Map;
 /**
  * Created by user on 19.05.2016.
  */
+@Component
 public class UserDAOImpl implements UserDAO {
+
+    @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
 
 
