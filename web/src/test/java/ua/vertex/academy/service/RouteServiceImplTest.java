@@ -1,109 +1,103 @@
-package ua.vertex.academy.service;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.junit.Test;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.vertex.academy.config.Configuration;
-import ua.vertex.route.Entity.Route;
-import ua.vertex.waypoint.Entity.WayPoint;
-
-import static org.junit.Assert.*;
-
-/**
- * Created by RASTA on 20.05.2016.
- */
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = Configuration.class)
-public class RouteServiceImplTest {
-
-    @Autowired
-    RouteService routeService;
-
-    private static long ROUTE_ID = 1;
-
-    private static Route TEST_ROUTE;
-
-
-    @Before
-    public void init() {
-        TEST_ROUTE = new Route(1, "test");
-        routeService.create(TEST_ROUTE);
-    }
-
-    @After
-    public void clear() {
-        routeService.delete(ROUTE_ID);
-    }
-
-    @Test
-    public void createExistedTest() throws Exception {
-        Route existed = new Route(ROUTE_ID, "test");
-        long existedId = routeService.create(existed);
-        assertEquals(-1, existedId);
-    }
-
-
-    @Test
-    public void get() throws Exception {
-        Route actual = routeService.get(ROUTE_ID);
-        assertEquals(TEST_ROUTE, actual);
-    }
-
-    @Test()
-    public void getNotExisted() throws Exception {
-        Route actual = routeService.get(ROUTE_ID + 10);
-        assertEquals("empty", actual.getName());
-    }
-
-    @Test
-    public void update() throws Exception {
-        TEST_ROUTE.setName("testUpdate");
-        routeService.update(ROUTE_ID, TEST_ROUTE);
-        Route actual = routeService.get(ROUTE_ID);
-        assertEquals("testUpdate", actual.getName());
-    }
-
-    @Test
-    public void deleteTwice() throws Exception {
-        routeService.delete(ROUTE_ID);
-        routeService.delete(ROUTE_ID);
-        Route route = routeService.get(ROUTE_ID); // don't work
-        assertEquals("empty", route.getName());
-    }
-
-    @Test
-    public void addWaypoint() throws Exception {
-        WayPoint first = new WayPoint((int) ROUTE_ID, 1, 1, 1, 1);
-        WayPoint second = new WayPoint((int) ROUTE_ID, 2, 2, 2, 1);
-        WayPoint third = new WayPoint((int) ROUTE_ID, 3, 3, 3, 1);
-        routeService.addWaypoint(first);
-        routeService.addWaypoint(second);
-        routeService.addWaypoint(third);
-        Route expected = routeService.get(ROUTE_ID);
-        assertEquals(3, expected.getWayPoints().size());
-
-    }
-
-    @Test
-    public void deleteWayPoint() throws Exception {
-        WayPoint first = new WayPoint((int) ROUTE_ID, 1, 1, 1, 1);
-        WayPoint second = new WayPoint((int) ROUTE_ID, 2, 2, 2, 1);
-        WayPoint third = new WayPoint((int) ROUTE_ID, 3, 3, 3, 1);
-        routeService.addWaypoint(first);
-        routeService.addWaypoint(second);
-        routeService.addWaypoint(third);
-        Route expected = routeService.get(ROUTE_ID);
-
-        WayPoint firstAfterReturn = expected.getWayPoints().get(0);
-
-        routeService.deleteWayPoint(firstAfterReturn.getId());
-        expected = routeService.get(ROUTE_ID);
-        assertEquals(2, expected.getWayPoints().size());
-
-    }
-}
+//package ua.vertex.academy.service;
+//
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.runner.RunWith;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.test.context.ContextConfiguration;
+//import org.junit.Test;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//import ua.vertex.academy.config.Configuration;
+//import ua.vertex.route.Entity.Route;
+//import ua.vertex.waypoint.Entity.WayPoint;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//import static org.junit.Assert.*;
+//
+///**
+// * Created by RASTA on 20.05.2016.
+// */
+//
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(classes = Configuration.class)
+//public class RouteServiceImplTest {
+//
+//    @Autowired
+//    RouteService routeService;
+//
+//    private static long ROUTE_ID;
+//
+//    private static Route TEST_ROUTE;
+//
+//
+//    @Before
+//    public void init() {
+//        TEST_ROUTE = new Route("test");
+//        ROUTE_ID = routeService.create(TEST_ROUTE);
+//    }
+//
+//    @After
+//    public void clear() {
+//        routeService.delete(ROUTE_ID);
+//    }
+//
+//    @Test
+//    public void createDuplicate() throws Exception {
+//        Route duplicate = new Route(ROUTE_ID, "test");
+//        long duplicateId = routeService.create(duplicate);
+//        assertNotEquals(ROUTE_ID, duplicateId);
+//        routeService.delete(duplicateId);
+//    }
+//
+//    @Test
+//    public void createNull() throws Exception {
+//        long duplicateId = routeService.create(null);
+//        assertEquals(-1, duplicateId);
+//    }
+//
+//    @Test
+//    public void getExisted() throws Exception {
+//        Route actual = routeService.read(ROUTE_ID);
+//        assertEquals(TEST_ROUTE, actual);
+//    }
+//
+//    @Test()
+//    public void getNotExisted() throws Exception {
+//        Route actual = routeService.read(ROUTE_ID + 10);
+//        assertEquals("empty", actual.getName());
+//    }
+//
+//    @Test
+//    public void update() throws Exception {
+//        TEST_ROUTE.setName("testUpdate");
+//
+//        List<WayPoint> wayPoints = new ArrayList<>();
+//        WayPoint first = WayPoint.newBuilder().setRouteId(ROUTE_ID).setX(1).setY(1).setHeight(1).setAccuracy(1).build();
+//        WayPoint second = WayPoint.newBuilder().setRouteId(ROUTE_ID).setX(3).setY(2).setHeight(2).setAccuracy(2).build();
+//        WayPoint third = WayPoint.newBuilder().setRouteId(ROUTE_ID).setX(3).setY(3).setHeight(3).setAccuracy(3).build();
+//        wayPoints.add(first);
+//        wayPoints.add(second);
+//        wayPoints.add(third);
+//        TEST_ROUTE.setWayPoints(wayPoints);
+//        routeService.update(ROUTE_ID, TEST_ROUTE);
+//
+//
+//        wayPoints = new ArrayList<>();
+//        wayPoints.add(first);
+//
+//        TEST_ROUTE.setWayPoints(wayPoints); //// TODO: 21.05.2016 Test once more after change to Set
+//        routeService.update(ROUTE_ID, TEST_ROUTE);
+//        Route actual = routeService.read(ROUTE_ID);
+//        assertEquals("testUpdate", actual.getName());
+//        assertEquals(3, actual.getWayPoints().size());
+//    }
+//
+//    @Test
+//    public void deleteTwice() throws Exception {
+//        routeService.delete(ROUTE_ID);
+//        routeService.delete(ROUTE_ID);
+//        Route route = routeService.read(ROUTE_ID);
+//        assertEquals("empty", route.getName());
+//    }
+//}

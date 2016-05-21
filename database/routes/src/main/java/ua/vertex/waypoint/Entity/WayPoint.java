@@ -28,11 +28,11 @@ public class WayPoint implements Serializable, Comparable<WayPoint> {
         private Builder() {
         }
 
-        public Builder setId(int id) {
+        public Builder setId(long id) {
             WayPoint.this.id = id;
             return this;
         }
-        public Builder setRouteId(int routeId) {
+        public Builder setRouteId(long routeId) {
             WayPoint.this.routeId = routeId;
             return this;
         }

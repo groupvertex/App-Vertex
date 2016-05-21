@@ -1,11 +1,13 @@
 package ua.vertex.academy.aspect;
 
-import liquibase.logging.Logger;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import ua.vertex.route.Entity.Route;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
@@ -13,46 +15,41 @@ import ua.vertex.route.Entity.Route;
  */
 @Aspect
 public class ServiceAspect {
+    private static final Logger logger = Logger.getLogger(ServiceAspect.class.getName());
 
     @Around("execution(* ua.vertex.academy.service.RouteServiceImpl.create(..)) && args(route)")
     public Object aroundCreate(ProceedingJoinPoint joinPoint, Route route) {
-        long id = -1;
-        try {
-            if (route != null) {
-                id = (long) joinPoint.proceed();
-                return id;
-            }
-        } catch (Throwable throwable) {
-            System.out.println("route with the same id is already exist!");
+        if (route == null) {
+            return -1l;
         }
-        return id;
+        try {
+            long id = ThreadLocalRandom.current().nextInt(3000000); // TODO: 21.05.2016 do the same but with long
+            route.setId(id);
+            return joinPoint.proceed();
+        } catch (Throwable throwable) {
+            logger.info("route with id:" + route.getId() + " is already exist!", throwable);
+            return aroundCreate(joinPoint, route);
+        }
     }
 
-    @AfterThrowing("execution(* ua.vertex.academy.service.RouteServiceImpl.get(..))")
-    public Object aroundGet() {
-        return new Route(-1, "empty");
+    @Around("execution(* ua.vertex.academy.service.RouteServiceImpl.read(..))")
+    public Object aroundGet(ProceedingJoinPoint joinPoint) {
+        try {
+            return joinPoint.proceed();
+        } catch (Throwable throwable) {
+            return new Route(-1, "empty");
+        }
     }
 
-    @AfterThrowing("execution(* ua.vertex.academy.service.RouteServiceImpl.update(..))")
-    public void aroundUpdate() {
-        System.out.println("error on update");
-    //// TODO: 20.05.2016 Add logger
+    @AfterThrowing(value = "execution(* ua.vertex.academy.service.RouteServiceImpl.update(..))", throwing = "throwable")
+    public void aroundUpdate(Throwable throwable) {
+        logger.warn("error in update", throwable);
     }
 
 
-    @AfterThrowing("execution(* ua.vertex.academy.service.RouteServiceImpl.delete(..))")
-    public void aroundDelete() {
-        System.out.println("route is already deleted");
+    @AfterThrowing(value = "execution(* ua.vertex.academy.service.RouteServiceImpl.delete(..))", throwing = "throwable")
+    public void aroundDelete(Throwable throwable) {
+        logger.warn("error in delete", throwable);
     }
 
-    @AfterThrowing("execution(* ua.vertex.academy.service.RouteServiceImpl.addWaypoint(..))")
-    public void aroundAddWaypoint() {
-        System.out.println("waypoint is already added");
-    }
-
-    @AfterThrowing("execution(* ua.vertex.academy.service.RouteServiceImpl.deleteWayPoint(..))")
-    public void aroundDeleteWaypoint() {
-        System.out.println("waypoint is already deleted");
-
-    }
 }
