@@ -1,9 +1,10 @@
 package ua.vertex.waypoint.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -20,95 +21,84 @@ import java.util.List;
 public class WayPointDAOImpl implements WayPointDAO {
 
     @Autowired
-    private JdbcTemplate myRepo;
+    private NamedParameterJdbcTemplate myRepo;
 
-    private static final String CREATE = "INSERT INTO routes.waypoint (track_id, x, y, height, accuracy) VALUES(?,?,?,?,?)";
-    private static final String READ = "SELECT id, track_id, x, y, height, accuracy, get_time FROM routes.waypoint WHERE id = ?";
-    private static final String UPDATE = "UPDATE routes.waypoint SET track_id = ?, x = ?, y = ?, height = ?, accuracy = ? WHERE id = ?";
-    private static final String DELETE = "DELETE FROM routes.waypoint WHERE id = ?";
+    private static final String CREATE =
+            "INSERT INTO routes.waypoint (track_id, x, y, height, accuracy) VALUES(:track_id,:x,:y,:height,:accuracy)";
+    private static final String READ =
+            "SELECT id, track_id, x, y, height, accuracy, get_time FROM routes.waypoint WHERE id = :id";
+    private static final String UPDATE =
+            "UPDATE routes.waypoint SET track_id = :track_id, x = :x, y = :y, height = :height, accuracy = :accuracy WHERE id = :id";
+    private static final String DELETE =
+            "DELETE FROM routes.waypoint WHERE id = :id";
     private static final String SELECT_ALL_WAYPOINT_TO_ROUTE =
-            "SELECT id, track_id, x, y, height, accuracy, get_time FROM routes.waypoint WHERE track_id = ? ORDER BY get_time ASC;";
+            "SELECT id, track_id, x, y, height, accuracy, get_time FROM routes.waypoint WHERE track_id = :track_id ORDER BY get_time ASC;";
 
     public WayPointDAOImpl() {
     }
 
     @Override
-    public int createWayPoint(WayPoint wayPoint) {
+    public long create(WayPoint wayPoint) {
         KeyHolder holder = new GeneratedKeyHolder();
-        myRepo.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, wayPoint.getRouteId());
-                ps.setDouble(2, wayPoint.getX());
-                ps.setDouble(3, wayPoint.getY());
-                ps.setInt(4, wayPoint.getHeight());
-                ps.setInt(5, wayPoint.getAccuracy());
-                return ps;
-            }
-        }, holder);
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource()
+                .addValue("track_id", wayPoint.getRouteId())
+                .addValue("x", wayPoint.getX())
+                .addValue("y", wayPoint.getY())
+                .addValue("height", wayPoint.getHeight())
+                .addValue("accuracy", wayPoint.getAccuracy());
 
-        int newWayPointId = (int)holder.getKeys().get("id");
-//        Timestamp timestamp = (Timestamp)holder.getKeys().get("get_time");
-
+        myRepo.update(CREATE, namedParameters, holder, new String[]{"id"});
+        long newWayPointId = (int)holder.getKeys().get("id");
         return newWayPointId;
     }
 
     @Override
-    public WayPoint readWayPoint(int id) {
-        RowMapper<WayPoint> mapper = new RowMapper<WayPoint>() {
-            @Override
-            public WayPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
-                int id = rs.getInt("id");
-                int routeId = rs.getInt("track_id");
-                double x = rs.getDouble("x");
-                double y = rs.getDouble("y");
-                int height = rs.getInt("height");
-                int accuracy = rs.getInt("accuracy");
-                Timestamp addTime = rs.getObject("get_time", Timestamp.class);
-                WayPoint wayPoint = new WayPoint(routeId, x, y, height, accuracy);
-                wayPoint.setId(id);
-                wayPoint.setAddTime(addTime);
-                return wayPoint;
-            }
-        };
-        return myRepo.queryForObject(READ, mapper, id);
+    public WayPoint read(long id) {
+        SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
+        WayPoint wayPoint = myRepo.queryForObject(READ, namedParameters, new WayPointRowMapper());
+        return wayPoint;
     }
 
     @Override
-    public void updateWayPoint(int id, WayPoint wayPoint) {
-        myRepo.update(UPDATE,
-                wayPoint.getRouteId(),
-                wayPoint.getX(),
-                wayPoint.getY(),
-                wayPoint.getHeight(),
-                wayPoint.getAccuracy(),
-                id);
+    public void update(long id, WayPoint wayPoint) {
+        SqlParameterSource namedParameters = new MapSqlParameterSource()
+                .addValue("track_id", wayPoint.getRouteId())
+                .addValue("x", wayPoint.getX())
+                .addValue("y", wayPoint.getY())
+                .addValue("height", wayPoint.getHeight())
+                .addValue("accuracy", wayPoint.getAccuracy())
+                .addValue("id", id);
+        myRepo.update(UPDATE, namedParameters);
     }
 
     @Override
-    public void deleteWayPoint(int id) {
-        myRepo.update(DELETE, id);
+    public void delete(long id) {
+        SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
+        myRepo.update(DELETE, namedParameters);
     }
 
     @Override
     public List<WayPoint> getSortedWayPointsForRoute(long routeId) {
-        List<WayPoint> wayPoints = this.myRepo.query(SELECT_ALL_WAYPOINT_TO_ROUTE, new RowMapper<WayPoint>() {
-            @Override
-            public WayPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
-                WayPoint wayPoint = new WayPoint();
-                wayPoint.setId(Integer.parseInt(rs.getString("id")));
-                wayPoint.setRouteId(Integer.parseInt(rs.getString("track_id")));
-                wayPoint.setX(Double.parseDouble(rs.getString("x")));
-                wayPoint.setY(Double.parseDouble(rs.getString("y")));
-                wayPoint.setHeight(Integer.parseInt(rs.getString("height")));
-                wayPoint.setHeight(Integer.parseInt(rs.getString("accuracy")));
-                wayPoint.setAddTime(Timestamp.valueOf(rs.getString("get_time")));
-
-                return wayPoint;
-            }
-        }, routeId);
+        SqlParameterSource namedParameters = new MapSqlParameterSource("track_id", routeId);
+        List<WayPoint> wayPoints =  myRepo.query(SELECT_ALL_WAYPOINT_TO_ROUTE, namedParameters, new WayPointRowMapper());
         Collections.sort(wayPoints);
         return wayPoints;
+    }
+
+    class WayPointRowMapper implements RowMapper<WayPoint> {
+
+        @Override
+        public WayPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
+            WayPoint wayPoint = WayPoint.newBuilder()
+                    .setId(Integer.parseInt(rs.getString("id")))
+                    .setRouteId(Integer.parseInt(rs.getString("track_id")))
+                    .setX(Double.parseDouble(rs.getString("x")))
+                    .setY(Double.parseDouble(rs.getString("y")))
+                    .setHeight(Integer.parseInt(rs.getString("height")))
+                    .setAccuracy(Integer.parseInt(rs.getString("accuracy")))
+                    .setAddTime(Timestamp.valueOf(rs.getString("get_time")))
+                    .build();
+            return wayPoint;
+        }
     }
 }
