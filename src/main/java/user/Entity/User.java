@@ -4,11 +4,15 @@ package user.Entity;
  * Created by user on 18.05.2016.
  */
 public class User {
-    private int id;
+    private long id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+
+    public User(){
+
+    }
 
     public User(int id, String firstName, String lastName,
                 String email, String password) {
@@ -23,7 +27,7 @@ public class User {
         this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -76,7 +80,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int)id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);

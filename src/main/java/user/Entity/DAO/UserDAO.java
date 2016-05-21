@@ -10,9 +10,9 @@ public interface UserDAO {
 
 
         void create(User user);
-        User read(int id);
-        void update(User user, int id);
-        void delete(int id);
+        User read(long id);
+        void update(User user, long id);
+        void delete(long id);
 
 
 }
