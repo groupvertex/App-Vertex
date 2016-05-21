@@ -7,25 +7,58 @@ import java.sql.Timestamp;
  * Created by Vasyl on 18/05/2016.
  */
 public class WayPoint implements Serializable, Comparable<WayPoint> {
+
     private static long serialVersionUID = 123456789L;
 
-    private int id;
-    private int routeId;
+    private long id;
+    private long routeId;
     private double x;
     private double y;
     private int height;
     private int accuracy;
     private Timestamp addTime;
 
-    public WayPoint() {
+    private WayPoint() {
     }
 
-    public WayPoint(int routeId, double x, double y, int height, int accuracy) {
-        this.routeId = routeId;
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.accuracy = accuracy;
+    public static Builder newBuilder() {
+        return new WayPoint().new Builder();
+    }
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder setId(int id) {
+            WayPoint.this.id = id;
+            return this;
+        }
+        public Builder setRouteId(int routeId) {
+            WayPoint.this.routeId = routeId;
+            return this;
+        }
+        public Builder setX(double x) {
+            WayPoint.this.x = x;
+            return this;
+        }
+        public Builder setY(double y) {
+            WayPoint.this.y = y;
+            return this;
+        }
+        public Builder setHeight(int height) {
+            WayPoint.this.height = height;
+            return this;
+        }
+        public Builder setAccuracy(int accuracy) {
+            WayPoint.this.accuracy = accuracy;
+            return this;
+        }
+        public Builder setAddTime(Timestamp addTime) {
+            WayPoint.this.addTime = addTime;
+            return this;
+        }
+        public WayPoint build() {
+            return WayPoint.this;
+        }
     }
 
     @Override
@@ -55,7 +88,7 @@ public class WayPoint implements Serializable, Comparable<WayPoint> {
 
     @Override
     public int hashCode() {
-        int result;
+        long result;
         long temp;
         result = id;
         result = 31 * result + routeId;
@@ -66,7 +99,7 @@ public class WayPoint implements Serializable, Comparable<WayPoint> {
         result = 31 * result + height;
         result = 31 * result + accuracy;
         result = 31 * result + (addTime != null ? addTime.hashCode() : 0);
-        return result;
+        return (int) result;
     }
 
     @Override
@@ -82,59 +115,31 @@ public class WayPoint implements Serializable, Comparable<WayPoint> {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getRouteId() {
+    public long getRouteId() {
         return routeId;
-    }
-
-    public void setRouteId(int routeId) {
-        this.routeId = routeId;
     }
 
     public double getX() {
         return x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
     public double getY() {
         return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public int getAccuracy() {
         return accuracy;
     }
 
-    public void setAccuracy(int accuracy) {
-        this.accuracy = accuracy;
-    }
-
     public Timestamp getAddTime() {
         return addTime;
-    }
-
-    public void setAddTime(Timestamp addTime) {
-        this.addTime = addTime;
     }
 }
