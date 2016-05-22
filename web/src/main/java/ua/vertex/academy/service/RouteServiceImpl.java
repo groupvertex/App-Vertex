@@ -7,7 +7,6 @@ import ua.vertex.route.Entity.Route;
 import ua.vertex.waypoint.DAO.WayPointDAO;
 import ua.vertex.waypoint.Entity.WayPoint;
 
-import java.util.List;
 
 /**
  * Created by RASTA on 19.05.2016.
@@ -39,10 +38,10 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public void update(long id, Route route) {
         routeDAO.update(route, id);
-        List<WayPoint> fromStorage = routeDAO.read(route.getId()).getWayPoints(); // TODO: 21.05.2016 refactor according to the Set<WayPoint>
-        route.getWayPoints().stream().filter(wayPoint -> !fromStorage.contains(wayPoint)).forEach(wayPoint -> {
-            wayPointDAO.create(wayPoint);
-        });
+        int storageRouteSize = routeDAO.read(route.getId()).getWayPoints().size();
+        for (int i = storageRouteSize; i < route.getWayPoints().size(); i++) {
+            wayPointDAO.create(route.getWayPoints().get(i));
+        }
 
     }
 
