@@ -35,7 +35,7 @@ public class Route {
     }
 
     public void setWayPoints(List<WayPoint> wayPoints) {
-        this.wayPoints.addAll(wayPoints);
+        this.wayPoints = wayPoints;
     }
 
     public long getId() {

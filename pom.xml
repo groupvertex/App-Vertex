@@ -11,7 +11,7 @@
     <modules>
         <module>database</module>
         <module>analytics</module>
-        <module>business</module>
+        <module>web</module>
         <module>messaging</module>
     </modules>
 
