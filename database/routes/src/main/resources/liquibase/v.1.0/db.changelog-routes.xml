@@ -7,12 +7,14 @@
 
     <changeSet author="Vasyl" id="changelog-1.0">
         <insert tableName="route">
+            <column name="id">1</column>
             <column name="name">track_one</column>
         </insert>
     </changeSet>
 
     <changeSet author="Vasyl" id="changelog-1.1">
         <insert tableName="waypoint">
+            <column name="id">1</column>
             <column name="track_id">1</column>
             <column name="x">10</column>
             <column name="y">25</column>

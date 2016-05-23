@@ -9,6 +9,7 @@ import ua.vertex.route.Entity.Route;
 import ua.vertex.waypoint.DAO.WayPointDAO;
 import ua.vertex.waypoint.Entity.WayPoint;
 
+import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +20,15 @@ import java.util.Map;
 @Repository
 public class RouteDAOImpl implements RouteDAO {
 
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
-    NamedParameterJdbcTemplate jdbcTemplate;
+    private WayPointDAO wayPointDAO;
 
     @Autowired
-    WayPointDAO wayPointDAO;
+    public RouteDAOImpl(DataSource dataSource) {
+        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
 
     private static final String INSERTSQL = "INSERT INTO routes.route (id, name) VALUES(:id,:name)";
     private static final String SELECTSQL = "SELECT id,name FROM routes.route WHERE id = :id";
@@ -34,9 +38,9 @@ public class RouteDAOImpl implements RouteDAO {
     @Override
     public void create(Route route) {
         Map namedParameters = new HashMap<>();
-        namedParameters.put("id",Long.valueOf(route.getId()));
-        namedParameters.put("name",route.getName());
-        jdbcTemplate.update(INSERTSQL,namedParameters);
+        namedParameters.put("id", Long.valueOf(route.getId()));
+        namedParameters.put("name", route.getName());
+        jdbcTemplate.update(INSERTSQL, namedParameters);
     }
 
     @Override
@@ -53,9 +57,9 @@ public class RouteDAOImpl implements RouteDAO {
     @Override
     public void update(Route route, long id) {
         Map namedParameters = new HashMap<>();
-        namedParameters.put("id",id);
-        namedParameters.put("name",route.getName());
-        jdbcTemplate.update(UPDATESQL,namedParameters);
+        namedParameters.put("id", id);
+        namedParameters.put("name", route.getName());
+        jdbcTemplate.update(UPDATESQL, namedParameters);
 
     }
 
