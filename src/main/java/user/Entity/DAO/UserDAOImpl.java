@@ -27,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
 
     private static final String INSERTSQL = "INSERT INTO user (id, first_name, last_name,email,password) VALUES(:id,:first_name,:last_name,:email, :password)";
     private static final String SELECTSQL = "SELECT * FROM user WHERE id = :id";
-    private static final String UPDATESQL = "UPDATE user SET first_name = :first_name, last_name = :last_name, password = : password WHERE id = :id";
+    private static final String UPDATESQL = "UPDATE user SET first_name = :first_name, last_name = :last_name, email = :email, password =  :password WHERE id = :id";
     private static final String DELETESQL = "DELETE FROM user WHERE id = :id";
 
 
