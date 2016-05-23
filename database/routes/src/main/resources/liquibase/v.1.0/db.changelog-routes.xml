@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="Vasyl" id="changelog-1.0">
+        <insert tableName="route">
+            <column name="name">track_one</column>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Vasyl" id="changelog-1.1">
+        <insert tableName="waypoint">
+            <column name="track_id">1</column>
+            <column name="x">10</column>
+            <column name="y">25</column>
+            <column name="height">400</column>
+            <column name="accuracy">5</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
