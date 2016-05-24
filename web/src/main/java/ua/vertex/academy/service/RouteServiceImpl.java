@@ -2,7 +2,7 @@ package ua.vertex.academy.service;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ua.vertex.route.DAO.RouteDAO;
 import ua.vertex.route.Entity.Route;
 import ua.vertex.waypoint.DAO.WayPointDAO;
@@ -15,9 +15,9 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by RASTA on 19.05.2016.
  */
-@Repository
+@Service
 public class RouteServiceImpl implements RouteService {
-    private static final Logger logger = Logger.getLogger(RouteServiceImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(RouteServiceImpl.class);
     private final Route emptyRoute = new Route(-1, "empty");
     @Autowired
     RouteDAO routeDAO;
@@ -39,8 +39,8 @@ public class RouteServiceImpl implements RouteService {
             }
             return route.getId();
 
-        } catch (Throwable throwable) {
-            logger.warn(throwable.getMessage());
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage());
         }
         return -1;
 
@@ -66,8 +66,8 @@ public class RouteServiceImpl implements RouteService {
                 wayPointDAO.create(wp);
 
             }
-        } catch (Throwable throwable) {
-            logger.warn(throwable.getMessage());
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage());
         }
     }
 
@@ -75,10 +75,9 @@ public class RouteServiceImpl implements RouteService {
     public void delete(long id) {
         try {
             routeDAO.delete(id);
-        } catch (Throwable throwable) {
-            logger.warn(throwable.getMessage());
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage());
         }
     }
-
 
 }
