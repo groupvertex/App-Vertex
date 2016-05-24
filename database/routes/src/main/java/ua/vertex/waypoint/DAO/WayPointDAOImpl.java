@@ -89,13 +89,13 @@ public class WayPointDAOImpl implements WayPointDAO {
         @Override
         public WayPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
             WayPoint wayPoint = WayPoint.newBuilder()
-                    .setId(Long.parseLong(rs.getString("id")))
-                    .setRouteId(Long.parseLong(rs.getString("track_id")))
-                    .setX(Double.parseDouble(rs.getString("x")))
-                    .setY(Double.parseDouble(rs.getString("y")))
-                    .setHeight(Integer.parseInt(rs.getString("height")))
-                    .setAccuracy(Integer.parseInt(rs.getString("accuracy")))
-                    .setAddTime(Timestamp.valueOf(rs.getString("get_time")))
+                    .setId(rs.getLong("id"))
+                    .setRouteId(rs.getLong("track_id"))
+                    .setX(rs.getDouble("x"))
+                    .setY(rs.getDouble("y"))
+                    .setHeight(rs.getInt("height"))
+                    .setAccuracy(rs.getInt("accuracy"))
+                    .setAddTime(rs.getTimestamp("get_time"))
                     .build();
             return wayPoint;
         }

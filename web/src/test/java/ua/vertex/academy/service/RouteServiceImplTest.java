@@ -32,9 +32,9 @@ public class RouteServiceImplTest {
     @Autowired
     RouteService routeService;
 
-    private static long ROUTE_ID;
+    private long ROUTE_ID;
 
-    private static Route TEST_ROUTE;
+    private Route TEST_ROUTE;
 
     @Before
     public void init() {
@@ -76,27 +76,21 @@ public class RouteServiceImplTest {
     @Test
     public void update() throws Exception {
         TEST_ROUTE.setName("testUpdate");
-
         List<WayPoint> wayPoints = new ArrayList<>();
-        WayPoint first = WayPoint.newBuilder().setId(ThreadLocalRandom.current().nextLong())
-                .setRouteId(ROUTE_ID).setX(1).setY(1).setHeight(1).setAccuracy(1).build();
-        WayPoint second = WayPoint.newBuilder().setId(ThreadLocalRandom.current().nextLong())
-                .setRouteId(ROUTE_ID).setX(3).setY(2).setHeight(2).setAccuracy(2).build();
-        WayPoint third = WayPoint.newBuilder().setId(ThreadLocalRandom.current().nextLong())
-                .setRouteId(ROUTE_ID).setX(3).setY(3).setHeight(3).setAccuracy(3).build();
+        ThreadLocalRandom current = ThreadLocalRandom.current();
+        WayPoint first = WayPoint.newBuilder().setId(current.nextLong()).setRouteId(ROUTE_ID).setX(1).setY(1).build();
+        WayPoint second = WayPoint.newBuilder().setId(current.nextLong()).setRouteId(ROUTE_ID).setX(3).setY(2).build();
         wayPoints.add(first);
         wayPoints.add(second);
-        wayPoints.add(third);
         TEST_ROUTE.setWayPoints(wayPoints);
         routeService.update(ROUTE_ID, TEST_ROUTE);
-
         wayPoints.add(first);
 
         TEST_ROUTE.setWayPoints(wayPoints);
         routeService.update(ROUTE_ID, TEST_ROUTE);
         Route actual = routeService.read(ROUTE_ID);
         assertEquals("testUpdate", actual.getName());
-        assertEquals(3, actual.getWayPoints().size());
+        assertEquals(2, actual.getWayPoints().size());
     }
 
     @Test
