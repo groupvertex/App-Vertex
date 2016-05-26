@@ -3,16 +3,11 @@ package ua.vertex.waypoint.DAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.vertex.waypoint.Entity.WayPoint;
 
-import javax.sql.DataSource;
 
 import java.util.List;
 
@@ -22,49 +17,24 @@ import static org.junit.Assert.*;
  * Created by Vasyl on 18/05/2016.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = ua.vertex.Conf.class)
-@ContextConfiguration(classes = WayPointDAOImplTest.TestConf.class)
-
-
+@ContextConfiguration(classes = ua.vertex.Conf.class)
+@ActiveProfiles("test")
 public class WayPointDAOImplTest {
 
     @Autowired
     private WayPointDAO wayPointDAO;
 
-    @Configuration
-    public static class TestConf {
 
-        @Bean(name = "dataSource")
-        DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder()
-                    .setType(EmbeddedDatabaseType.HSQL)
-                    .addScript("classpath:create.sql")
-                    .addScript("classpath:insert.sql")
-                    .continueOnError(true)
-                    .build();
-        }
-
-        @Bean(name = "myRepo")
-        NamedParameterJdbcTemplate myRepo(DataSource dataSource) {
-            return new NamedParameterJdbcTemplate(dataSource);
-        }
-
-        @Bean
-        WayPointDAO wayPointDAO() {
-            return new WayPointDAOImpl();
-        }
+    @Test
+    public void createWayPoint() throws Exception {
+        WayPoint actual = WayPoint.newBuilder().setRouteId(1).setX(10).setY(10).setHeight(100).setAccuracy(5).build();
+        wayPointDAO.create(actual);
+        assertEquals(1, actual.getRouteId());
+        assertEquals(10, actual.getX(), 0.0001);
+        assertEquals(10, actual.getY(), 0.0001);
+        assertEquals(100, actual.getHeight());
+        assertEquals(5, actual.getAccuracy());
     }
-
-//    @Test
-//    public void createWayPoint() throws Exception {
-//        WayPoint actual = WayPoint.newBuilder().setRouteId(1).setX(10).setY(10).setHeight(100).setAccuracy(5).build();
-//        wayPointDAO.create(actual);
-//        assertEquals(1, actual.getRouteId());
-//        assertEquals(10, actual.getX(), 0.0001);
-//        assertEquals(10, actual.getY(), 0.0001);
-//        assertEquals(100, actual.getHeight());
-//        assertEquals(5, actual.getAccuracy());
-//    }
 
     @Test
     public void readWayPoint() throws Exception {

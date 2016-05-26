@@ -1,19 +1,24 @@
 package ua.vertex.academy.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ua.vertex.route.DAO.RouteDAO;
 import ua.vertex.route.Entity.Route;
 import ua.vertex.waypoint.DAO.WayPointDAO;
 import ua.vertex.waypoint.Entity.WayPoint;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 /**
  * Created by RASTA on 19.05.2016.
  */
-@Repository
+@Service
 public class RouteServiceImpl implements RouteService {
-
+    private static final Logger logger = Logger.getLogger(RouteServiceImpl.class);
+    private final Route emptyRoute = new Route(-1, "empty");
     @Autowired
     RouteDAO routeDAO;
 
@@ -22,33 +27,57 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public long create(Route route) {
-        routeDAO.create(route);
-        for (WayPoint wayPoint : route.getWayPoints()) {
-            wayPointDAO.create(wayPoint);
+        if (route == null) {
+            return -1;
         }
-        return route.getId();
+        long id = ThreadLocalRandom.current().nextLong();
+        route.setId(id);
+        try {
+            routeDAO.create(route);
+            for (WayPoint wayPoint : route.getWayPoints()) {
+                wayPointDAO.create(wayPoint);
+            }
+            return route.getId();
+
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage());
+        }
+        return -1;
+
     }
 
     @Override
     public Route read(long id) {
-        Route route = routeDAO.read(id);
-        return route;
+        try {
+            return routeDAO.read(id);
+        } catch (Throwable throwable) {
+            return emptyRoute;
+        }
     }
 
     @Override
     public void update(long id, Route route) {
-        routeDAO.update(route, id);
-        int storageRouteSize = routeDAO.read(route.getId()).getWayPoints().size();
-        for (int i = storageRouteSize; i < route.getWayPoints().size(); i++) {
-            wayPointDAO.create(route.getWayPoints().get(i));
-        }
+        try {
+            routeDAO.update(route, id);
+            List<WayPoint> oldPoints = routeDAO.read(id).getWayPoints();
+            List<WayPoint> newPoints = route.getWayPoints();
+            newPoints.removeAll(oldPoints);
+            for (WayPoint wp : newPoints) {
+                wayPointDAO.create(wp);
 
+            }
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage());
+        }
     }
 
     @Override
     public void delete(long id) {
-        routeDAO.delete(id);
+        try {
+            routeDAO.delete(id);
+        } catch (Exception ex) {
+            logger.warn(ex.getMessage());
+        }
     }
-
 
 }
