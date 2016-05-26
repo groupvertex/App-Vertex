@@ -1,4 +1,4 @@
-package ua.vertex.academy.service;
+package com.vertex.service;
 
 import ua.vertex.route.Entity.Route;
 

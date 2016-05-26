@@ -1,4 +1,4 @@
-package ua.vertex.academy.service;
+package com.vertex.service;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

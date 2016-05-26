@@ -1,4 +1,4 @@
-package ua.vertex.academy.service;
+package com.vertex.service;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.junit.Test;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.vertex.academy.config.Configuration;
+import com.vertex.config.Configuration;
 import ua.vertex.route.Entity.Route;
 import ua.vertex.waypoint.Entity.WayPoint;
 
