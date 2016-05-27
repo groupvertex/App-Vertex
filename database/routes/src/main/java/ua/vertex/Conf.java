@@ -43,7 +43,7 @@ public class Conf {
     @Profile("test")
     DataSource testDataSource() {
         return new EmbeddedDatabaseBuilder()
-                .setType(EmbeddedDatabaseType.HSQL)
+                .setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:embedded/create.sql")
                 .addScript("classpath:embedded/insert.sql")
                 .continueOnError(false)
