@@ -1,3 +1,4 @@
+DROP SCHEMA IF EXISTS routes;
 CREATE SCHEMA routes;
 
 CREATE TABLE routes.route (
