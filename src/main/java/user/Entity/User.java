@@ -10,20 +10,20 @@ public class User {
     private String email;
     private String password;
 
-    public User(){
+    public User() {
 
     }
 
-    public User(int id, String firstName, String lastName,
+    public User(long id, String firstName, String lastName,
                 String email, String password) {
-        this.id=id;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.email=email;
-        this.password=password;
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -80,7 +80,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = (int)id;
+        int result = (int) id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);

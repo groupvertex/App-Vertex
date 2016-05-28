@@ -3,16 +3,10 @@ package user.Entity.DAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import user.Entity.User;
-
-import javax.sql.DataSource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -22,27 +16,12 @@ import static org.junit.Assert.assertNull;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=UserDAOImplConf.class)
+@ContextConfiguration(classes = UserDAOImplConf.class)
+@ActiveProfiles("test")
 public class UserDAOImplTest {
     @Autowired
     private UserDAO my;
 
-    @Configuration
-    public static class Conf {
-        @Bean
-        DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder()
-                    .setType(EmbeddedDatabaseType.HSQL)
-                    .addScript("classpath:create.sql")
-                    .addScript("classpath:insert.sql")
-                    .build();
-        }
-
-        @Bean
-        NamedParameterJdbcTemplate j() {
-            return new NamedParameterJdbcTemplate(dataSource());
-        }
-    }
 
     @Test
     public void testRead() throws Exception {
@@ -66,7 +45,7 @@ public class UserDAOImplTest {
         user.setEmail("myemail2");
         user.setPassword("password2");
         my.create(user);
-        assertEquals("name2",my.read(2).getFirstName());
+        assertEquals("name2", my.read(2).getFirstName());
     }
 
     @Test
@@ -83,8 +62,8 @@ public class UserDAOImplTest {
         user2.setLastName("lastname3");
         user2.setEmail("email3");
         user2.setPassword("password3");
-        my.update(user2,3);
-        assertEquals("name3",my.read(3).getFirstName());
+        my.update(user2, 3);
+        assertEquals("name3", my.read(3).getFirstName());
     }
 
     @Test
@@ -103,7 +82,5 @@ public class UserDAOImplTest {
         my.create(user2);
         assertNull(my.read(4).getFirstName());
     }
-
-
 
 }

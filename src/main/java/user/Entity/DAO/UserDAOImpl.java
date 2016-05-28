@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 import user.Entity.User;
 
+import javax.activation.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -19,11 +20,13 @@ import java.util.Map;
 @Component
 public class UserDAOImpl implements UserDAO {
 
+
+    private NamedParameterJdbcTemplate jdbcTemplate;
+
     @Autowired
-    NamedParameterJdbcTemplate jdbcTemplate;
-
-
-
+    public UserDAOImpl(DataSource data) {
+        jdbcTemplate = new NamedParameterJdbcTemplate((javax.sql.DataSource) data);
+    }
 
     private static final String INSERTSQL = "INSERT INTO user (id, first_name, last_name,email,password) VALUES(:id,:first_name,:last_name,:email, :password)";
     private static final String SELECTSQL = "SELECT * FROM user WHERE id = :id";
@@ -57,7 +60,7 @@ public class UserDAOImpl implements UserDAO {
         paramMap.put("last_name", user.getLastName());
         paramMap.put("email", user.getEmail());
         paramMap.put("password", user.getPassword());
-        jdbcTemplate.update(UPDATESQL,paramMap);
+        jdbcTemplate.update(UPDATESQL, paramMap);
 
     }
 
@@ -68,12 +71,10 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
-
-
     class UserMapper implements RowMapper {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
-            user.setId(rs.getInt("id"));
+            user.setId(rs.getLong("id"));
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
             user.setEmail(rs.getString("email"));
