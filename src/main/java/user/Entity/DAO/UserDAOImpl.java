@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 import user.Entity.User;
 
-import javax.activation.DataSource;
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Autowired
     public UserDAOImpl(DataSource data) {
-        jdbcTemplate = new NamedParameterJdbcTemplate((javax.sql.DataSource) data);
+        jdbcTemplate = new NamedParameterJdbcTemplate(data);
     }
 
     private static final String INSERTSQL = "INSERT INTO user (id, first_name, last_name,email,password) VALUES(:id,:first_name,:last_name,:email, :password)";
@@ -37,7 +37,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void create(User user) {
         Map paramMap = new HashMap<>();
-        paramMap.put("id", Long.valueOf(user.getId()));
+        paramMap.put("id", user.getId());
         paramMap.put("first_name", user.getFirstName());
         paramMap.put("last_name", user.getLastName());
         paramMap.put("email", user.getEmail());
@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User read(long id) {
-        SqlParameterSource namedParameters = new MapSqlParameterSource("id", Long.valueOf(id));
+        SqlParameterSource namedParameters = new MapSqlParameterSource("id",id);
         User user = (User) jdbcTemplate.queryForObject(SELECTSQL, namedParameters, new UserMapper());
         return user;
     }
@@ -66,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void delete(long id) {
-        SqlParameterSource namedParameters = new MapSqlParameterSource("id", Long.valueOf(id));
+        SqlParameterSource namedParameters = new MapSqlParameterSource("id",id);
         jdbcTemplate.update(DELETESQL, namedParameters);
     }
 
