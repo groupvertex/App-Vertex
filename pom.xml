@@ -11,8 +11,9 @@
     <modules>
         <module>database</module>
         <module>analytics</module>
-        <module>web</module>
+        <module>service</module>
         <module>messaging</module>
+        <module>common</module>
     </modules>
 
     <properties>
