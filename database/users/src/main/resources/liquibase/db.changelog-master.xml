@@ -6,9 +6,13 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <!--Here will be our database version xml's-->
+    <!--v.1.0-->
     <include file="src/main/resources/liquibase/sql/setSearchPath.sql" />
     <include file="src/main/resources/liquibase/sql/createTableForSchemaUsers.sql" />
-
     <include file="src/main/resources/liquibase/v.1.0/db.changelog-users.xml" />
+
+    <!--v.1.1-->
+    <include file="src/main/resources/liquibase/sql/createTablePayment.sql" />
+    <include file="src/main/resources/liquibase/v.1.1/db.changelog-users.xml" />
 
 </databaseChangeLog>
