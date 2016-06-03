@@ -2,7 +2,6 @@ package ua.vertex.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import ua.vertex.dao.route.RouteDAO;
 import entity.Route;
 import ua.vertex.dao.waypoint.WayPointDAO;
@@ -29,9 +28,7 @@ public class RouteServiceImpl implements RouteService {
         long id = ThreadLocalRandom.current().nextLong();
         route.setId(id);
         routeDAO.create(route);
-        for (WayPoint wayPoint : route.getWayPoints()) {
-            wayPointDAO.create(wayPoint);
-        }
+        route.getWayPoints().forEach(wayPointDAO::create);
         return route.getId();
     }
 
@@ -51,12 +48,8 @@ public class RouteServiceImpl implements RouteService {
         List<WayPoint> newPoints = route.getWayPoints();
         newPoints.removeAll(oldPoints);
         try {
-            for (WayPoint wp : newPoints) {
-                wayPointDAO.create(wp);
-
-            }
+            newPoints.stream().forEach(wayPointDAO::create);
         } catch (Exception ignored) {
-
         }
     }
 
