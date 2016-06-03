@@ -1,6 +1,7 @@
-package ua.vertex.payment.DAO;
+package ua.vertex.dao.payment;
 
-import ua.vertex.payment.Entity.Payment;
+
+import entity.Payment;
 
 /**
  * Created by Vasyl on 27/05/2016.

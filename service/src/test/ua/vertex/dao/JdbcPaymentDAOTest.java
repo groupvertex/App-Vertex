@@ -1,21 +1,19 @@
-package ua.vertex.payment.DAO;
+package ua.vertex.dao;
 
+import entity.Payment;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.vertex.Conf;
-import ua.vertex.payment.Entity.Payment;
+import ua.vertex.config.DBConfig;
+import ua.vertex.dao.payment.PaymentDAO;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Vasyl on 27/05/2016.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = Conf.class)
+@ContextConfiguration(classes = DBConfig.class)
 @ActiveProfiles("test")
 public class JdbcPaymentDAOTest {
 

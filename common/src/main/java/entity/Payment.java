@@ -1,4 +1,4 @@
-package ua.vertex.payment.Entity;
+package entity;
 
 /**
  * Created by Vasyl on 27/05/2016.
@@ -13,7 +13,7 @@ public class Payment {
     public Payment(long id, long userId, int amount) {
         this.id = id;
         this.userId = userId;
-//        Amount money in sents
+//        Amount money in cents
         this.amount = amount;
     }
 
