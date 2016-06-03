@@ -87,11 +87,10 @@ public class RouteServiceImplTest {
         assertEquals(2, actual.getWayPoints().size());
     }
 
-    @Test
+    @Test(expected = RouteNotFoundException.class)
     public void deleteTwice() throws Exception {
         routeService.delete(ROUTE_ID);
         routeService.delete(ROUTE_ID);
-        Route route = routeService.read(ROUTE_ID);
-        assertEquals("empty", route.getName());
+        routeService.read(ROUTE_ID);
     }
 }
