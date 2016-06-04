@@ -1,26 +1,21 @@
-package user.Entity.DAO;
+package ua.vertex.dao.user;
 
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Component;
-import user.Entity.User;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by user on 19.05.2016.
+ * Created by user on 04.06.2016.
  */
-@Component
+@Repository
 public class UserDAOImpl implements UserDAO {
-
-
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -28,10 +23,10 @@ public class UserDAOImpl implements UserDAO {
         jdbcTemplate = new NamedParameterJdbcTemplate(data);
     }
 
-    private static final String INSERTSQL = "INSERT INTO user (id, first_name, last_name,email,password) VALUES(:id,:first_name,:last_name,:email, :password)";
-    private static final String SELECTSQL = "SELECT * FROM user WHERE id = :id";
-    private static final String UPDATESQL = "UPDATE user SET first_name = :first_name, last_name = :last_name, email = :email, password =  :password WHERE id = :id";
-    private static final String DELETESQL = "DELETE FROM user WHERE id = :id";
+    private static final String INSERTSQL = "INSERT INTO users.register_user (id, first_name, last_name,email,password) VALUES(:id,:first_name,:last_name,:email, :password)";
+    private static final String SELECTSQL = "SELECT * FROM users.register_user WHERE id = :id";
+    private static final String UPDATESQL = "UPDATE users.register_user SET first_name = :first_name, last_name = :last_name, email = :email, password =  :password WHERE id = :id";
+    private static final String DELETESQL = "DELETE FROM users.register_user WHERE id = :id";
 
 
     @Override
@@ -71,16 +66,5 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
-    class UserMapper implements RowMapper {
-        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            User user = new User();
-            user.setId(rs.getLong("id"));
-            user.setFirstName(rs.getString("first_name"));
-            user.setLastName(rs.getString("last_name"));
-            user.setEmail(rs.getString("email"));
-            user.setPassword(rs.getString("password"));
-            return user;
-        }
-    }
-}
 
+}

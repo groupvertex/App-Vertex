@@ -1,22 +1,23 @@
-package user.Entity.DAO;
+package ua.vertex.dao;
 
+import entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import user.Entity.User;
+import ua.vertex.config.DBConfig;
+import ua.vertex.dao.user.UserDAO;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
- * Created by user on 22.05.2016.
+ * Created by user on 04.06.2016.
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = UserDAOImplConf.class)
+@ContextConfiguration(classes = DBConfig.class)
 @ActiveProfiles("test")
 public class UserDAOImplTest {
     @Autowired
@@ -27,10 +28,10 @@ public class UserDAOImplTest {
     public void testRead() throws Exception {
         User expected = new User();
         expected.setId(1);
-        expected.setFirstName("name");
-        expected.setLastName("lastname");
-        expected.setEmail("myemail");
-        expected.setPassword("password");
+        expected.setFirstName("Vasyl");
+        expected.setLastName("Malik");
+        expected.setEmail("leo124@bigmir.net");
+        expected.setPassword("123");
         assertEquals(expected, my.read(1));
 
 
@@ -39,19 +40,19 @@ public class UserDAOImplTest {
     @Test
     public void create() throws Exception {
         User user = new User();
-        user.setId(2);
+        user.setId(3);
         user.setFirstName("name2");
         user.setLastName("lastname2");
         user.setEmail("myemail2");
         user.setPassword("password2");
         my.create(user);
-        assertEquals("name2", my.read(2).getFirstName());
+        assertEquals("name2", my.read(3).getFirstName());
     }
 
     @Test
     public void update() throws Exception {
         User user1 = new User();
-        user1.setId(3);
+        user1.setId(4);
         user1.setFirstName("name1");
         user1.setLastName("lastname1");
         user1.setEmail("email1");
@@ -62,25 +63,21 @@ public class UserDAOImplTest {
         user2.setLastName("lastname3");
         user2.setEmail("email3");
         user2.setPassword("password3");
-        my.update(user2, 3);
-        assertEquals("name3", my.read(3).getFirstName());
+        my.update(user2, 4);
+        assertEquals("name3", my.read(4).getFirstName());
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void delete() throws Exception {
         User user = new User();
-        user.setId(4);
+        user.setId(5);
         user.setFirstName("name4");
         user.setLastName("lastname4");
         user.setEmail("email4");
         user.setPassword("password4");
         my.create(user);
-        my.delete(4);
-        User user2 = new User();
-        user2.setEmail("newemail");
-        user2.setId(4);
-        my.create(user2);
-        assertNull(my.read(4).getFirstName());
+        my.delete(5);
+        my.read(5).getFirstName();
     }
 
 }

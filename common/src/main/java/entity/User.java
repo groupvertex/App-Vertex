@@ -1,7 +1,7 @@
-package user.Entity;
+package entity;
 
 /**
- * Created by user on 18.05.2016.
+ * Created by user on 04.06.2016.
  */
 public class User {
     private long id;
