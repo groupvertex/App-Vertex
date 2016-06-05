@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class WayPoint implements Serializable, Comparable<WayPoint> {
 
@@ -70,33 +71,16 @@ public class WayPoint implements Serializable, Comparable<WayPoint> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         WayPoint wayPoint = (WayPoint) o;
-
-        if (id != wayPoint.id) return false;
-        if (routeId != wayPoint.routeId) return false;
-        if (Double.compare(wayPoint.x, x) != 0) return false;
-        if (Double.compare(wayPoint.y, y) != 0) return false;
-        if (height != wayPoint.height) return false;
-        if (accuracy != wayPoint.accuracy) return false;
-        return addTime != null ? addTime.equals(wayPoint.addTime) : wayPoint.addTime == null;
-
+        return routeId == wayPoint.routeId &&
+                Double.compare(wayPoint.x, x) == 0 &&
+                Double.compare(wayPoint.y, y) == 0 &&
+                height == wayPoint.height;
     }
 
     @Override
     public int hashCode() {
-        long result;
-        long temp;
-        result = id;
-        result = 31 * result + routeId;
-        temp = Double.doubleToLongBits(x);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(y);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + height;
-        result = 31 * result + accuracy;
-        result = 31 * result + (addTime != null ? addTime.hashCode() : 0);
-        return (int) result;
+        return Objects.hash(routeId, x, y, height);
     }
 
     @Override
