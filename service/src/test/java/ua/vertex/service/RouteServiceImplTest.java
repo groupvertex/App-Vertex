@@ -51,6 +51,23 @@ public class RouteServiceImplTest {
     }
 
     @Test
+    public void createPointWithErrID() throws Exception {
+        Route normal = new Route(ROUTE_ID, "test");
+        WayPoint pointWithErrors = WayPoint.newBuilder().setId(ThreadLocalRandom.current()
+                .nextLong()).setRouteId(ThreadLocalRandom.current()
+                .nextInt()).setX(1).setY(1).build();
+        ArrayList<WayPoint> wayPoints = new ArrayList<>();
+        wayPoints.add(pointWithErrors);
+        normal.setWayPoints(wayPoints);
+
+        long normalId = routeService.create(normal);
+        WayPoint actual = routeService.read(normalId).getWayPoints().get(0);
+        assertEquals(normalId, actual.getRouteId());
+        assertNotEquals(pointWithErrors.getId(), actual.getId());
+        routeService.delete(normalId);
+    }
+
+    @Test
     public void createNull() throws Exception {
         long nullId = routeService.create(null);
         assertEquals(-1, nullId);

@@ -10,6 +10,7 @@ import ua.vertex.exception.RouteNotFoundException;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Service
 public class RouteServiceImpl implements RouteService {
@@ -28,8 +29,19 @@ public class RouteServiceImpl implements RouteService {
         long id = ThreadLocalRandom.current().nextLong();
         route.setId(id);
         routeDAO.create(route);
-        route.getWayPoints().forEach(wayPointDAO::create);
+        route.getWayPoints().parallelStream().map(p -> getRightPoint(p, id)).forEach(wayPointDAO::create);
         return route.getId();
+    }
+
+    private WayPoint getRightPoint(WayPoint p, long routeId) {
+        return WayPoint.newBuilder()
+                .setId(ThreadLocalRandom.current().nextLong())
+                .setRouteId(routeId)
+                .setX(p.getX())
+                .setY(p.getY())
+                .setHeight(p.getHeight())
+                .setAccuracy(p.getAccuracy())
+                .setAddTime(p.getAddTime()).build();
     }
 
     @Override
@@ -44,13 +56,9 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public void update(long id, Route route) {
         routeDAO.update(route, id);
-        List<WayPoint> oldPoints = routeDAO.read(id).getWayPoints();
-        List<WayPoint> newPoints = route.getWayPoints();
-        newPoints.removeAll(oldPoints);
-        try {
-            newPoints.stream().forEach(wayPointDAO::create);
-        } catch (Exception ignored) {
-        }
+        List<WayPoint> newPoints = route.getWayPoints().parallelStream().map(p -> getRightPoint(p, id)).distinct().collect(Collectors.toList());
+        newPoints.removeAll(wayPointDAO.getSortedWayPointsForRoute(id));
+        newPoints.forEach(wayPointDAO::create);
     }
 
     @Override
