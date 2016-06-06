@@ -15,6 +15,7 @@
         <module>messaging</module>
         <module>common</module>
         <module>rws</module>
+        <module>registration</module>
     </modules>
 
     <properties>
