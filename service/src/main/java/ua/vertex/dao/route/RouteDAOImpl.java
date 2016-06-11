@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import entity.Route;
 import entity.WayPoint;
+import ua.vertex.alert.AlertService;
 import ua.vertex.dao.waypoint.WayPointDAO;
 
 import javax.sql.DataSource;
@@ -24,6 +25,9 @@ public class RouteDAOImpl implements RouteDAO {
     private WayPointDAO wayPointDAO;
 
     @Autowired
+    private AlertService alertService;
+
+    @Autowired
     public RouteDAOImpl(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
@@ -39,6 +43,7 @@ public class RouteDAOImpl implements RouteDAO {
         namedParameters.put("id", route.getId());
         namedParameters.put("name", route.getName());
         jdbcTemplate.update(INSERTSQL, namedParameters);
+        alertService.sendRouteAllert(route);
     }
 
     @Override

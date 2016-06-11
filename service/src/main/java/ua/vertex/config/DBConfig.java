@@ -12,7 +12,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("ua.vertex.dao")
+@ComponentScan({"ua.vertex.dao", "ua.vertex.alert"})
 @PropertySource("classpath:db.properties")
 public class DBConfig {
 
