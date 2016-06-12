@@ -63,6 +63,12 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.13.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
