@@ -21,13 +21,13 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
-@WebIntegrationTest("server.port:8080")
+@WebIntegrationTest("server.port:8081")
 public class UserControllerTest {
 
     private static RestTemplate restTemplate = new RestTemplate();
-    private static final String SIGN_UP_URL = "http://localhost:8080/signup";
-    private static final String AUTH_URL = "http://localhost:8080/auth";
-    private static final String USER_URL = "http://localhost:8080/users/";
+    private static final String SIGN_UP_URL = "http://localhost:8081/signup";
+    private static final String AUTH_URL = "http://localhost:8081/auth";
+    private static final String USER_URL = "http://localhost:8081/users/";
 
     private static User user;
     private static String authToken;
