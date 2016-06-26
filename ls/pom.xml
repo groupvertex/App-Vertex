@@ -3,6 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>ls-fe</module>
+        <module>ls-common</module>
+    </modules>
 
     <parent>
         <artifactId>vertex-app</artifactId>
@@ -10,12 +14,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rws</artifactId>
+    <artifactId>ls</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>rws-fe</module>
-        <module>rws-be</module>
-    </modules>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
