@@ -1,7 +1,5 @@
 package my;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Route;
 import entity.WayPoint;
 import org.junit.Test;
@@ -9,8 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -42,12 +38,14 @@ public class RouteControllerTestIT {
     @Test
     public void testGetRoute() throws Exception {
         RestTemplate template = new TestRestTemplate();
-        ResponseEntity<String> response = template.getForEntity(baseURL + "/1", String.class);
+//        ResponseEntity<String> response = template.getForEntity(baseURL + "/1", String.class);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        JsonNode responseJson = objectMapper.readTree(response.getBody());
+//        JsonNode messageJson = responseJson.path("name");
+//        assertThat(messageJson.asText(), equalTo("first"));
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode responseJson = objectMapper.readTree(response.getBody());
-        JsonNode messageJson = responseJson.path("name");
-        assertThat(messageJson.asText(), equalTo("first"));
+        Route route = template.getForObject(baseURL+"/1", Route.class);
+        assertThat(route.getName(), equalTo("first"));
 
 
     }
@@ -60,30 +58,24 @@ public class RouteControllerTestIT {
         route.setName("name4");
         List<WayPoint> waypoints = new ArrayList<>();
 
-        WayPoint.Builder builder = WayPoint.newBuilder();
-        builder.setId(10);
-        builder.setRouteId(4);
-        builder.setX(150);
-        builder.setY(155);
-        builder.setHeight(100);
-        builder.setAccuracy(15);
-        builder.setAddTime(Timestamp.valueOf("2016-06-07 12:12:12"));
-        waypoints.add(builder.build());
-        route.setWayPoints(waypoints);
+        WayPoint wayPoint = WayPoint.newBuilder()
+                .setId(10)
+                .setRouteId(4)
+                .setX(150)
+                .setY(155)
+                .setHeight(100)
+                .setAccuracy(15)
+                .setAddTime(Timestamp.valueOf("2016-06-07 12:12:12"))
+                .build();
 
+        waypoints.add(wayPoint);
+        route.setWayPoints(waypoints);
 
         rest.postForObject(baseURL, route,Route.class);
 
-
         RestTemplate template = new TestRestTemplate();
-        ResponseEntity<String> response2 = template.getForEntity(baseURL + "/4", String.class);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode responseJson = objectMapper.readTree(response2.getBody());
-        JsonNode messageJson = responseJson.path("name");
-        assertThat(messageJson.asText(), equalTo("name4"));
-
-
+        Route route2 = template.getForObject(baseURL+"/4", Route.class);
+        assertThat(route2.getName(), equalTo("name4"));
     }
 
     @Test
@@ -94,15 +86,17 @@ public class RouteControllerTestIT {
         new_route.setName("name5");
         List<WayPoint> new_waypoints = new ArrayList<>();
 
-        WayPoint.Builder buildernew = WayPoint.newBuilder();
-        buildernew.setId(10);
-        buildernew.setRouteId(4);
-        buildernew.setX(150);
-        buildernew.setY(155);
-        buildernew.setHeight(100);
-        buildernew.setAccuracy(15);
-        buildernew.setAddTime(Timestamp.valueOf("2016-06-07 12:12:12"));
-        new_waypoints.add(buildernew.build());
+        WayPoint wayPoint1 = WayPoint.newBuilder()
+                .setId(10)
+                .setRouteId(4)
+                .setX(150)
+                .setY(155)
+                .setHeight(100)
+                .setAccuracy(15)
+                .setAddTime(Timestamp.valueOf("2016-06-07 12:12:12"))
+                .build();
+
+        new_waypoints.add(wayPoint1);
         new_route.setWayPoints(new_waypoints);
 
         rest1.postForObject(baseURL, new_route,Route.class);
@@ -112,29 +106,27 @@ public class RouteControllerTestIT {
         Route route = new Route();
         route.setName("name6");
         List<WayPoint> waypoints = new ArrayList<>();
-        WayPoint.Builder builder = WayPoint.newBuilder();
-        builder.setId(10);
-        builder.setRouteId(4);
-        builder.setX(150);
-        builder.setY(155);
-        builder.setHeight(100);
-        builder.setAccuracy(15);
-        builder.setAddTime(Timestamp.valueOf("2016-06-07 12:12:12"));
-        waypoints.add(builder.build());
+        WayPoint wayPoint2 = WayPoint.newBuilder()
+                .setId(10)
+                .setRouteId(4)
+                .setX(150)
+                .setY(155)
+                .setHeight(100)
+                .setAccuracy(15)
+                .setAddTime(Timestamp.valueOf("2016-06-07 12:12:12"))
+                .build();
+        waypoints.add(wayPoint2);
         route.setWayPoints(waypoints);
 
         rest.put(baseURL+"/5", route);
 
         RestTemplate template = new RestTemplate();
-        ResponseEntity<String> response2 = template.getForEntity(baseURL + "/5", String.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode responseJson = objectMapper.readTree(response2.getBody());
-        JsonNode messageJson = responseJson.path("name");
-        assertThat(messageJson.asText(), equalTo("name6"));
+        Route route2 = template.getForObject(baseURL+"/5", Route.class);
+        assertThat(route2.getName(), equalTo("name6"));
 
     }
 
-    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
     public void testDeleteRoute() throws Exception {
         RestTemplate rest1 = new TestRestTemplate();
         Route route = new Route();
@@ -142,26 +134,24 @@ public class RouteControllerTestIT {
         route.setName("name7");
         List<WayPoint> new_waypoints = new ArrayList<>();
 
-        WayPoint.Builder buildernew = WayPoint.newBuilder();
-        buildernew.setId(10);
-        buildernew.setRouteId(4);
-        buildernew.setX(150);
-        buildernew.setY(155);
-        buildernew.setHeight(100);
-        buildernew.setAccuracy(15);
-        buildernew.setAddTime(Timestamp.valueOf("2016-06-07 12:12:12"));
-        new_waypoints.add(buildernew.build());
+        WayPoint wayPoint = WayPoint.newBuilder()
+                .setId(10)
+                .setRouteId(4)
+                .setX(150)
+                .setY(155)
+                .setHeight(100)
+                .setAccuracy(15)
+                .setAddTime(Timestamp.valueOf("2016-06-07 12:12:12"))
+                .build();
+        new_waypoints.add(wayPoint);
         route.setWayPoints(new_waypoints);
 
         rest1.postForObject(baseURL, route,Route.class);
 
         rest1.delete(baseURL+"/6");
 
-         ResponseEntity<String> response2 = rest1.getForEntity(baseURL + "/6", String.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode responseJson = objectMapper.readTree(response2.getBody());
-        JsonNode messageJson = responseJson.path("name");
-        assertThat(messageJson.asText(), equalTo("name7"));
+        Route route2 = rest1.getForObject(baseURL+"/6", Route.class);
+        assertThat(route2.getName(), equalTo(null));
 
 
     }

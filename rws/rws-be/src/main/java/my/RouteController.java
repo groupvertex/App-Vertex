@@ -29,7 +29,6 @@ public class RouteController {
 
     @RequestMapping( value="/{id}", method = RequestMethod.PUT)
     public void updateRoute(@PathVariable long id , @RequestBody Route route) {
-        System.out.println("updating route");
         routeDAO.update(route, id);
     }
 
