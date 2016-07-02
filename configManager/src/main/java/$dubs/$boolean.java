@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class $boolean {
 
     @Autowired
-    PropertiesDAO dao = PropertiesDaoFactory.getINstance();
+    PropertiesDAO dao;// = PropertiesDaoFactory.getINstance();
 
     private final String propertyName;
     private final boolean default_value;
