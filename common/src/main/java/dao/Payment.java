@@ -1,9 +1,9 @@
-package entity;
+package dao;
 
 /**
- * Created by Vasyl on 27/05/2016.
+ * Created by Nick on 6/27/2016.
  */
-public class Payment  {
+public class Payment implements PaymentDao{
     private static long serialVersionUID = 123456789L;
 
     private long id;
@@ -20,26 +20,6 @@ public class Payment  {
     public Payment() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Payment payment = (Payment) o;
-
-        if (id != payment.id) return false;
-        if (userId != payment.userId) return false;
-        return amount == payment.amount;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (userId ^ (userId >>> 32));
-        result = 31 * result + amount;
-        return result;
-    }
 
     public long getId() {
         return id;
