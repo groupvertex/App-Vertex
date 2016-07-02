@@ -10,13 +10,16 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class JdbcTemplateConfigManagerDAO implements PropertiesDAO {
     private NamedParameterJdbcTemplate myRepo;
+    Map<String, String> map = new HashMap<>();
 
     @Autowired
-    public void JdbcTemplateConfigManagerDAO(DataSource dataSource) {
+    JdbcTemplateConfigManagerDAO(DataSource dataSource) {
         this.myRepo = new NamedParameterJdbcTemplate(dataSource);
     }
 
@@ -32,5 +35,9 @@ public class JdbcTemplateConfigManagerDAO implements PropertiesDAO {
         public String mapRow(ResultSet rs, int rowNum) throws SQLException {
             return rs.getString("value");
         }
+    }
+
+    public Map<String, String> getMap() {
+        return map;
     }
 }
