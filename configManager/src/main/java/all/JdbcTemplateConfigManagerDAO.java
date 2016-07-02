@@ -1,31 +1,36 @@
 package all;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-/**
- * Created by Vasyl on 02/07/2016.
- */
+@Repository
 public class JdbcTemplateConfigManagerDAO implements PropertiesDAO {
     private NamedParameterJdbcTemplate myRepo;
 
     @Autowired
-    public void JdbcConfigManagerDAO(DataSource dataSource) {
+    public void JdbcTemplateConfigManagerDAO(DataSource dataSource) {
         this.myRepo = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    private static final String CREATE =
-            "INSERT INTO users.payment (id, user_id, amount) VALUES(:id, :user_id, :amount)";
     private static final String READ =
-            "SELECT id, user_id, amount FROM users.payment WHERE id = :id";
-    private static final String UPDATE =
-            "UPDATE users.payment SET user_id = :user_id, amount = :amount WHERE id = :id";
-    private static final String DELETE =
-            "DELETE FROM users.payment WHERE id = :id";
+            "SELECT value FROM config.config WHERE key = :key";
 
-    public void get(String name) {
+    public String get(String name) {
+        SqlParameterSource namedParameters = new MapSqlParameterSource("key", name);
+        return myRepo.queryForObject(READ, namedParameters, new ConfigManagerRowMapper());
+    }
 
+    private class ConfigManagerRowMapper implements RowMapper<String> {
+        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return rs.getString("value");
+        }
     }
 }
