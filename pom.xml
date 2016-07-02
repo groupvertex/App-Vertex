@@ -9,11 +9,14 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>database</module>
+        <module>liquibase</module>
         <module>analytics</module>
-        <module>service</module>
         <module>messaging</module>
         <module>common</module>
+        <module>rws</module>
+        <module>ls</module>
+        <module>database</module>
+        <module>service</module>
     </modules>
 
     <properties>
@@ -33,6 +36,16 @@
 
     <dependencies>
         <!--Spring-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -56,10 +69,22 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies></dependencies>
+    </dependencyManagement>
+
 
     <build>
         <finalName>Tracker</finalName>
