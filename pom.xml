@@ -16,6 +16,7 @@
         <module>rws</module>
         <module>ls</module>
         <module>database</module>
+        <module>service</module>
     </modules>
 
     <properties>

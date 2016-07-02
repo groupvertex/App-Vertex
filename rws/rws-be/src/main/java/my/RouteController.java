@@ -18,13 +18,11 @@ public class RouteController {
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
     public Route getRoute(@PathVariable long id) {
         return routeDAO.read(id);
-
     }
 
     @RequestMapping( method = RequestMethod.POST)
     public void addRoute(@RequestBody Route route) {
         routeDAO.create(route);
-
     }
 
     @RequestMapping( value="/{id}", method = RequestMethod.PUT)
