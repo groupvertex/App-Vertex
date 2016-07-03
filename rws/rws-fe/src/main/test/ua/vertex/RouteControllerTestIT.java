@@ -1,8 +1,5 @@
 package ua.vertex;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 import entity.Route;
 import entity.WayPoint;
 import org.junit.Test;

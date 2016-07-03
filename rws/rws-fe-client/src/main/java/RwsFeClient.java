@@ -1,15 +1,13 @@
 import entity.Route;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-
 public class RwsFeClient {
 
-    private String url = "http://localhost:";
+    private String url = "http://localhost:8002/routes/";
 
-    public void addRoute(Route route) {
+    public long addRoute(Route route) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(url, route, Object.class, Collections.emptyMap());
+        return restTemplate.postForObject(url, route, Long.class);
 
     }
 }
