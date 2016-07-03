@@ -1,10 +1,11 @@
+package ua.vertex;
+
 import entity.Route;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.vertex.Application;
 
 import static org.junit.Assert.assertNotEquals;
 
