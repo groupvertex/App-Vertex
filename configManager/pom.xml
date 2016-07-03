@@ -47,6 +47,11 @@
             <artifactId>postgresql</artifactId>
             <version>9.4.1208.jre7</version>
         </dependency>
+        <dependency>
+            <groupId>com.netflix.archaius</groupId>
+            <artifactId>archaius-core</artifactId>
+            <version>0.7.4</version>
+        </dependency>
     </dependencies>
 
 
