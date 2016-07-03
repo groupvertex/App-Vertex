@@ -18,11 +18,6 @@
         </dependency>
         <dependency>
             <groupId>com.vertex</groupId>
-            <artifactId>service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vertex</groupId>
             <artifactId>rws-fe</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
