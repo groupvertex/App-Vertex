@@ -12,6 +12,7 @@ public class $boolean {
     }
 
     public boolean get() {
+
         return property.get();
     }
 }

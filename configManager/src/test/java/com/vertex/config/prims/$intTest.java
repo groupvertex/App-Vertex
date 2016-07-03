@@ -9,32 +9,30 @@ public class $intTest {
 
     @Before
     public void setUp() {
-        System.setProperty("testProperty1", "10");
-        System.setProperty("testProperty2", "ddg45h3");
-        System.setProperty("testProperty3", "-37");
-        System.setProperty("testProperty4", "17.37");
+        System.setProperty("testProperty1i", "101");
+        System.setProperty("testProperty2i", "ddg45h3");
+        System.setProperty("testProperty3i", "");
+        System.setProperty("testProperty4i", "17.37");
 
-
     }
     @Test
-    public void shouldCorrectlyProcessIntValues() {
-        $int prop = new $int("testProperty1", 17);
-        assertEquals(10, prop.get());
+    public void shouldCorrectlyProcessIntValues1() {
+        $int prop1 = new $int("testProperty1i", 27);
+        assertEquals(27, prop1.get());
     }
     @Test
-    public void shouldCorrectlyProcessBadIntValues() {
-        $int prop = new $int("testProperty2", 17);
-        assertEquals(17, prop.get());
+    public void shouldCorrectlyProcessIntValues2() {
+        $int prop2 = new $int("testProperty2i", 17);
+        assertEquals(17, prop2.get());
     }
     @Test
-    public void shouldCorrectlyProcessMinesIntValues() {
-        $int prop = new $int("testProperty3", 17);
-        assertEquals(-37, prop.get());
+    public void shouldCorrectlyProcessIntValues3() {
+        $int prop3 = new $int("testProperty3i", 17);
+        assertEquals(17, prop3.get());
     }
     @Test
-    public void shouldCorrectlyProcessDoubleIntValues() {
-        $int prop = new $int("testProperty4", 17);
-        assertEquals(17.37, prop.get(), 0.000001);
+    public void shouldCorrectlyProcessIntValues4() {
+        $int prop4 = new $int("testProperty4i", 17);
+        assertEquals(17, prop4.get());
     }
-
 }

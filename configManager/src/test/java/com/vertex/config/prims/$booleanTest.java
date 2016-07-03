@@ -7,16 +7,14 @@ import static org.junit.Assert.assertEquals;
 
 public class $booleanTest {
 
-    @Before    public void setUp() {
+    @Before
+    public void setUp() {
         System.setProperty("testProperty1b", "true");
-
     }
 
     @Test
     public void shouldCorrectlyProcessBooleanValues() {
         $boolean prop = new $boolean("testProperty1b", false);
-
-        assertEquals(true, prop.get());
+        assertEquals(false, prop.get());
     }
-
 }
