@@ -8,13 +8,13 @@ import static org.junit.Assert.assertEquals;
 public class $booleanTest {
 
     @Before    public void setUp() {
-        System.setProperty("testProperty", "true");
+        System.setProperty("testProperty1b", "true");
 
     }
 
     @Test
     public void shouldCorrectlyProcessBooleanValues() {
-        $boolean prop = new $boolean("testProperty", false);
+        $boolean prop = new $boolean("testProperty1b", false);
 
         assertEquals(true, prop.get());
     }
