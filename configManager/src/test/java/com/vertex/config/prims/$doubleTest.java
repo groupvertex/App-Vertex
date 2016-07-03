@@ -11,11 +11,12 @@ public class $doubleTest {
         System.setProperty("testProperty1", "9.7");
         System.setProperty("testProperty2", "df");
         System.setProperty("testProperty3", "-9.7");
+        System.setProperty("testProperty4", "");
 
     }
     @Test
     public void shouldCorrectlyProcessDoubleValues1 () {
-        $double prop = new $double("testProperty1", 9.77);
+        $double prop = new $double("testProperty1", 9.7);
 
         assertEquals(9.7, prop.get(),0.000001);
     }
@@ -30,7 +31,13 @@ public class $doubleTest {
     public void shouldCorrectlyProcessDoubleValues3 () {
         $double prop = new $double("testProperty3", 10.5);
 
-        assertEquals(-9.7, prop.get(),0.000001);
+        assertEquals(10.5, prop.get(),0.000001);
+    }
+    @Test
+    public void shouldCorrectlyProcessDoubleValues4 () {
+        $double prop = new $double("testProperty4", 10.5);
+
+        assertEquals(10.5, prop.get(),0.000001);
     }
 
 }

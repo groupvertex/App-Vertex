@@ -13,7 +13,7 @@ public class $intTest {
         System.setProperty("testProperty2", "ddg45h3");
         System.setProperty("testProperty3", "-37");
         System.setProperty("testProperty4", "17.37");
-        System.setProperty("testProperty5", null);
+
 
     }
     @Test
@@ -36,9 +36,5 @@ public class $intTest {
         $int prop = new $int("testProperty4", 17);
         assertEquals(17.37, prop.get(), 0.000001);
     }
-    @Test
-    public void shouldCorrectlyProcessNullIntValues() {
-        $int prop = new $int("testProperty5", 17);
-        assertEquals(null, prop.get());
-    }
+
 }

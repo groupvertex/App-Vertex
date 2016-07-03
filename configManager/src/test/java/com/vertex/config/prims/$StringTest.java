@@ -9,21 +9,21 @@ public class $StringTest {
     @Before
     public void setUp() {
         System.setProperty("testProperty1", "fgs");
-        System.setProperty("testProperty2", null);
+        System.setProperty("testProperty2", "");
 
     }
     @Test
     public void shouldCorrectlyProcessStringValues1 () {
-        $String prop = new $String("testProperty1", "sdfs");
+        $String prop = new $String("testProperty1", "fgs");
 
         assertEquals("fgs", prop.get());
     }
-
     @Test
     public void shouldCorrectlyProcessStringValues2 () {
         $String prop = new $String("testProperty2", "fgs");
 
-        assertEquals(null, prop.get());
+        assertEquals("", prop.get());
     }
+
 
 }
