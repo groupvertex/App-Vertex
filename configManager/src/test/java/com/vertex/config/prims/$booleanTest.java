@@ -7,8 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class $booleanTest {
 
-    @Before
-    public void setUp() {
+    @Before    public void setUp() {
         System.setProperty("testProperty", "true");
 
     }
