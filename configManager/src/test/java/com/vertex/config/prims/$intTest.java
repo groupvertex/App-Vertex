@@ -13,7 +13,7 @@ public class $intTest {
         System.setProperty("testProperty2", "ddg45h3");
         System.setProperty("testProperty3", "-37");
         System.setProperty("testProperty4", "17.37");
-        System.setProperty("testProperty4", null);
+        System.setProperty("testProperty5", null);
 
     }
     @Test
