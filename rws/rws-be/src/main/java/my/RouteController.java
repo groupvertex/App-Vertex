@@ -24,7 +24,6 @@ public class RouteController {
     @RequestMapping( method = RequestMethod.POST)
     public void addRoute(@RequestBody Route route) {
         routeDAO.create(route);
-
     }
 
     @RequestMapping( value="/{id}", method = RequestMethod.PUT)

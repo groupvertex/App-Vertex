@@ -1,5 +1,6 @@
 package ua.vertex.controller;
 
+import entity.AuthenticationRequest;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,15 +13,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import entity.AuthenticationRequest;
 import ua.vertex.security.JwtTokenUtil;
 import ua.vertex.security.exception.UserExistException;
 import ua.vertex.security.service.CustomUserDetails;
 import ua.vertex.security.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
+@RequestMapping("/login")
 public class AuthenticationController {
 
     @Value("${jwt.header}")
@@ -33,7 +32,7 @@ public class AuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private CustomUserDetails userDetailsService;
+    private CustomUserDetails detailsService;
 
     @Autowired
     private UserService userService;
@@ -55,24 +54,15 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Reload password post-security so we can generate token
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+        final UserDetails userDetails = this.detailsService.loadUserByUsername(request.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(token);
     }
 
-    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader);
-        String username = jwtTokenUtil.getUsernameFromToken(token);
-        UserDetails details = userDetailsService.loadUserByUsername(username);
-
-        if (details != null) {
-            String refreshedToken = jwtTokenUtil.refreshToken(token);
-            return ResponseEntity.ok(refreshedToken);
-
-        }
-        return ResponseEntity.badRequest().build();
+    @RequestMapping(value = "/valid", method = RequestMethod.POST)
+    public boolean isValidToken(@RequestBody String token) {
+        return jwtTokenUtil.validateToken(token, detailsService.loadUserByUsername(jwtTokenUtil.getUsernameFromToken(token)));
     }
 
     @ExceptionHandler(UserExistException.class)

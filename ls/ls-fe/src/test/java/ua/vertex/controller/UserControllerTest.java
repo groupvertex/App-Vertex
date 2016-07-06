@@ -1,5 +1,6 @@
 package ua.vertex.controller;
 
+import entity.AuthenticationRequest;
 import entity.HeaderRequestInterceptor;
 import entity.User;
 import org.junit.AfterClass;
@@ -12,12 +13,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import ua.vertex.config.Application;
-import entity.AuthenticationRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
@@ -25,8 +25,8 @@ import static org.junit.Assert.*;
 public class UserControllerTest {
 
     private static RestTemplate restTemplate = new RestTemplate();
-    private static final String SIGN_UP_URL = "http://localhost:8081/signup";
-    private static final String AUTH_URL = "http://localhost:8081/auth";
+    private static final String SIGN_UP_URL = "http://localhost:8081/login/signup";
+    private static final String AUTH_URL = "http://localhost:8081/login/auth";
     private static final String USER_URL = "http://localhost:8081/users/";
 
     private static User user;
@@ -75,7 +75,7 @@ public class UserControllerTest {
         user.setPassword(actual.getPassword());
         assertEquals(user, actual);
     }
-    
+
     @Test
     public void updateUser() throws Exception {
         user.setFirstName("testUpdate");

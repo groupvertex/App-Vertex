@@ -40,12 +40,13 @@ public class UserService {
         return id;
     }
 
-    private void isValidRequest(String token, long userID) {
+    public boolean isValidRequest(String token, long userID) {
         String username = tokenUtil.getUsernameFromToken(token);
         User user = (User) userDetails.loadUserByUsername(username);
-        if (user.getId() != userID && !user.getAuthorities().contains("ROLE_ADMIN")) {
+        if (!tokenUtil.validateToken(token, user) || (user.getId() != userID && !user.getAuthorities().contains("ROLE_ADMIN"))) {
             throw new AccessDeniedException("access denied");
         }
+        return true;
     }
 
     public User read(String token, long id) {
