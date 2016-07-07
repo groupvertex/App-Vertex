@@ -25,7 +25,7 @@ public class JdbcTemplateConfigManagerDAO implements PropertiesDAO {
     private static final String DELETE =
             "DELETE FROM users.payment WHERE id = :id";
 
-    public void get(String name) {
-
+    public String get(String name) {
+        return name;
     }
 }

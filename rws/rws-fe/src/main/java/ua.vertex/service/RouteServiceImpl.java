@@ -3,22 +3,20 @@ package ua.vertex.service;
 import entity.Route;
 import entity.WayPoint;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ua.vertex.dao.route.RouteDAO;
 import ua.vertex.dao.waypoint.WayPointDAO;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@Component
+@Service
 public class RouteServiceImpl implements RouteService {
 
+    @Autowired
+    private RouteDAO routeDAO;
 
     @Autowired
-    RouteDAO routeDAO;
-
-    @Autowired
-    WayPointDAO wayPointDAO;
-
+    private WayPointDAO wayPointDAO;
 
     public long create(Route route) {
         long id = ThreadLocalRandom.current().nextLong();
