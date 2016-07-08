@@ -1,4 +1,4 @@
-package my;
+package ua.vertex;
 
 import entity.Route;
 import entity.WayPoint;
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertThat;
  * Created by user on 25.06.2016.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, DBConfig.class})
+@SpringApplicationConfiguration(classes = {RwsBeApplication.class, DBConfig.class})
 @ActiveProfiles("test")
 @WebAppConfiguration
 @IntegrationTest({"server.port=8081"})

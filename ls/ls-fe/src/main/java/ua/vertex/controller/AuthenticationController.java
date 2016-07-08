@@ -61,19 +61,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(token);
     }
 
-    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader);
-        String username = jwtTokenUtil.getUsernameFromToken(token);
-        UserDetails details = userDetailsService.loadUserByUsername(username);
-
-        if (details != null) {
-            String refreshedToken = jwtTokenUtil.refreshToken(token);
-            return ResponseEntity.ok(refreshedToken);
-
-        }
-        return ResponseEntity.badRequest().build();
-    }
 
     @ExceptionHandler(UserExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
