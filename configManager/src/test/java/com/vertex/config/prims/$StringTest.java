@@ -8,19 +8,36 @@ import static org.junit.Assert.assertEquals;
 public class $StringTest {
     @Before
     public void setUp() {
-        System.setProperty("testProperty1", "fgs");
-        System.setProperty("testProperty2", "");
+        //boolean
+        System.setProperty("testProperty1b", "true");
+        //double
+        System.setProperty("testProperty1d", "9.7");
+        System.setProperty("testProperty2d", "df");
+        System.setProperty("testProperty3d", "");
+        //int
+        System.setProperty("testProperty1i", "101");
+        System.setProperty("testProperty2i", "ddg45h3");
+        System.setProperty("testProperty3i", "");
+        System.setProperty("testProperty4i", "17.37");
+        //long
+        System.setProperty("testProperty1l", "100501");
+        System.setProperty("testProperty2l", "ddg45h3");
+        System.setProperty("testProperty3l", "");
+        System.setProperty("testProperty4l", "17.37");
+        //string
+        System.setProperty("testProperty1s", "hello world");
+        System.setProperty("testProperty2s", "");
 
     }
     @Test
     public void shouldCorrectlyProcessStringValues1 () {
-        $String prop = new $String("testProperty1", "fgs");
+        $String prop = new $String("testProperty1s", "ololoev");
 
-        assertEquals("fgs", prop.get());
+        assertEquals("hello world", prop.get());
     }
     @Test
     public void shouldCorrectlyProcessStringValues2 () {
-        $String prop = new $String("testProperty2", "fgs");
+        $String prop = new $String("testProperty2s", "fgs123");
 
         assertEquals("", prop.get());
     }
