@@ -12,7 +12,8 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import ua.vertex.config.Application;
+import ua.vertex.config.LoginServiceApplication;
+import entity.AuthenticationRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Application.class)
-@WebIntegrationTest("server.port:8003")
+@SpringApplicationConfiguration(LoginServiceApplication.class)
+@WebIntegrationTest("server.port:8081")
 public class UserControllerTest {
 
     private static RestTemplate restTemplate = new RestTemplate();
