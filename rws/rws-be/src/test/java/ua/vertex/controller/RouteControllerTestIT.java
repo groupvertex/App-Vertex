@@ -9,13 +9,13 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
-import ua.vertex.Application;
+import ua.vertex.RwsBeApplication;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Application.class)
-@WebIntegrationTest("server.port:8081")
+@SpringApplicationConfiguration(RwsBeApplication.class)
+@WebIntegrationTest("server.port:8001")
 public class RouteControllerTestIT {
 
     private static RestTemplate restTemplate = new RestTemplate();

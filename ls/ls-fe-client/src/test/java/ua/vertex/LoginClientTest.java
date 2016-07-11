@@ -8,13 +8,13 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ua.vertex.config.Application;
+import ua.vertex.config.LoginServiceApplication;
 
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Application.class)
-@WebIntegrationTest("server.port:8081")
+@SpringApplicationConfiguration(LoginServiceApplication.class)
+@WebIntegrationTest("server.port:8003")
 @ActiveProfiles("test")
 public class LoginClientTest {
 
@@ -33,7 +33,7 @@ public class LoginClientTest {
         assertTrue(id != tested.getId());
 
         String token = loginClient.login(tested.getEmail(), tested.getPassword());
-        assertTrue(loginClient.isValidToken(token));
+        assertTrue(loginClient.isValidSession(token));
     }
 
 }

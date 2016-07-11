@@ -2,6 +2,7 @@ package ua.vertex.controller;
 
 import entity.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.vertex.exception.RouteNotFoundException;
@@ -9,6 +10,7 @@ import ua.vertex.service.RouteService;
 
 @RestController
 @RequestMapping("/routes")
+@RefreshScope
 public class RouteController {
 
     @Autowired

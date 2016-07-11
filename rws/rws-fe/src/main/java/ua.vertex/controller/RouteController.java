@@ -2,6 +2,7 @@ package ua.vertex.controller;
 
 import entity.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -13,6 +14,7 @@ import javax.servlet.ServletRequest;
 
 @RestController
 @RequestMapping("/routes")
+@RefreshScope
 public class RouteController {
 
     @Autowired

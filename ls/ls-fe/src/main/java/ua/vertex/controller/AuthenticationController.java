@@ -60,11 +60,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(token);
     }
 
-    @RequestMapping(value = "/valid", method = RequestMethod.POST)
-    public boolean isValidToken(@RequestBody String token) {
-        return jwtTokenUtil.validateToken(token, detailsService.loadUserByUsername(jwtTokenUtil.getUsernameFromToken(token)));
-    }
-
     @ExceptionHandler(UserExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handler(UserExistException ex) {

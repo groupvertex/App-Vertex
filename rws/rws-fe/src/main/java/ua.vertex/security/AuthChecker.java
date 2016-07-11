@@ -15,7 +15,8 @@ import java.util.List;
 @Component
 public class AuthChecker {
 
-    private static final String CHECK_URL = "http://localhost:8003/check";
+    @Value("${ls.check}")
+    private String checkUrl;
 
     @Value("${jwt.header}")
     private String tokenHeader;
@@ -33,7 +34,7 @@ public class AuthChecker {
             return execution.execute(wrapper, bytes);
         });
         restTemplate.setInterceptors(interceptors);
-        restTemplate.getForObject(CHECK_URL, Void.class);
+        restTemplate.getForObject(checkUrl, Void.class);
         return true;
     }
 }
