@@ -1,8 +1,10 @@
 package ua.vertex.controller;
 
+import entity.AuthenticationRequest;
 import entity.HeaderRequestInterceptor;
 import entity.User;
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -12,22 +14,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import ua.vertex.config.LoginServiceApplication;
-import entity.AuthenticationRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(LoginServiceApplication.class)
-@WebIntegrationTest("server.port:8081")
+@WebIntegrationTest("server.port:8003")
 public class UserControllerTest {
 
     private static RestTemplate restTemplate = new RestTemplate();
-    private static final String SIGN_UP_URL = "http://localhost:8081/signup";
-    private static final String AUTH_URL = "http://localhost:8081/auth";
-    private static final String USER_URL = "http://localhost:8081/users/";
+    private static final String SIGN_UP_URL = "http://localhost:8003/login/signup";
+    private static final String AUTH_URL = "http://localhost:8003/login/auth";
+    private static final String USER_URL = "http://localhost:8003/users/";
 
     private static User user;
     private static String authToken;
@@ -35,13 +36,9 @@ public class UserControllerTest {
 
     @AfterClass
     public static void cleanUp() throws Exception {
-        deleteUser();
-    }
-
-
-    private static void deleteUser() throws Exception {
         restTemplate.delete(USER_URL + user.getId());
     }
+
 
     @Test
     public void signUp() {
@@ -75,7 +72,7 @@ public class UserControllerTest {
         user.setPassword(actual.getPassword());
         assertEquals(user, actual);
     }
-    
+
     @Test
     public void updateUser() throws Exception {
         user.setFirstName("testUpdate");

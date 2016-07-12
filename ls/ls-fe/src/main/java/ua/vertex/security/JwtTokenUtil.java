@@ -83,18 +83,6 @@ public class JwtTokenUtil implements Serializable {
                 .compact();
     }
 
-    public String refreshToken(String token) {
-        String refreshedToken;
-        try {
-            final Claims claims = getClaimsFromToken(token);
-            claims.put(CLAIM_KEY_CREATED, new Date());
-            refreshedToken = generateToken(claims);
-        } catch (Exception e) {
-            refreshedToken = null;
-        }
-        return refreshedToken;
-    }
-
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

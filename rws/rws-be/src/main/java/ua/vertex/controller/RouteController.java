@@ -1,10 +1,12 @@
-package ua.vertex;
+package ua.vertex.controller;
 
 import entity.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ua.vertex.dao.route.RouteDAO;
+import ua.vertex.exception.RouteNotFoundException;
+import ua.vertex.service.RouteService;
 
 @RestController
 @RequestMapping("/routes")
@@ -12,30 +14,31 @@ import ua.vertex.dao.route.RouteDAO;
 public class RouteController {
 
     @Autowired
-    private RouteDAO routeDAO;
-
+    private RouteService routeService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Route getRoute(@PathVariable long id) {
-        return routeDAO.read(id);
-
+        return routeService.read(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public void addRoute(@RequestBody Route route) {
-        routeDAO.create(route);
-
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public long addRoute(@RequestBody Route route) {
+        return routeService.create(route);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void updateRoute(@PathVariable long id, @RequestBody Route route) {
-        routeDAO.update(route, id);
+        routeService.update(route, id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteRoute(@PathVariable long id) {
-        routeDAO.delete(id);
+        routeService.delete(id);
     }
 
-
+    @ExceptionHandler(RouteNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String RouteNotFoundHandler(RouteNotFoundException e) {
+        return e.getMessage();
+    }
 }
