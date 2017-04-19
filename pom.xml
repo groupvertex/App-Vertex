@@ -17,6 +17,7 @@
         <module>rws</module>
         <module>ls</module>
         <module>database</module>
+        <module>configManager</module>
     </modules>
 
     <properties>

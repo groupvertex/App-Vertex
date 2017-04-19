@@ -38,3 +38,12 @@ CREATE TABLE users.payment (
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users.register_user (id)
 );
+
+DROP SCHEMA IF EXISTS config;
+CREATE SCHEMA config;
+
+CREATE TABLE config.config (
+  key VARCHAR(50),
+  value VARCHAR(50),
+  PRIMARY KEY (key)
+)
